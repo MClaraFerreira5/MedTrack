@@ -33,6 +33,7 @@
     align-items: center;
     margin-left: 25px;
     margin-top: 2px;
+    align-self: center;
 }
 
 .link:hover{
