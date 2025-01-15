@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/button.css">
     <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/paginaPrincipal.css">
 </head>
 
 <body>
     <header>
-        <nav>
+        <nav class="container_navegação">
             <ul class="navbar">
                 <a href="home.html">
                     <img src="../images/logo_site_verde_musgo.jpg" alt="Logo do site" id="logo">
@@ -26,7 +27,8 @@
                         <a href="">Lista de Medicamentos</a>
                     </div>
                 </li>
-                <li><a href="">Alertas e Lembretes</a></li>
+                <li>
+                    <a href="">Alertas e Lembretes</a></li>
                 <li class="dropdown">
                     <a href="" class="dropbtn">Estoque</a>
                     <div class="dropdown-content">
@@ -40,9 +42,64 @@
             </ul>
         </nav>
     </header>
-    <main>
+
+    <!--Página principal-->  
+    <main class="container_paginaprincipal">
+        <header class="container_titulo">
+            <h1 class="titulo_item">Bem vindo, ....</h1>
+            <p class="subtitulo_item">Cadastre consultas 
+                e exames. E receba alertas!</p>
+        </header>
+
+        <div class="container_botoes">
+            <button class="botao active">Todos</button>
+            <button class="botao">Medicamentos</button>
+            <button class="botao">Consultas</button>
+            <button class="botao">Exames</button>
+        </div>
+
+        <div class="container_eventos">
+            <div class="evento_item" id="evento_item">
+                <div class="container_data_tarefa">
+                    <p>Sexta-Feira</p>
+                    <h1>09</h1>
+                    <p>Novembro-2025</p>
+                </div>
+                <div class="container_hora_tarefa">
+                    <h1>09:30</h1>
+                </div>
+
+                <div class="container_titulo_tarefas">
+                    <h1>Título</h1>
+                    <p>Legenda</p>
+                </div>
+
+                <div class="container_botoes_tarefa">
+                    <button class="botao_tarefa">Concluida</button>
+                </div>
+            </div>
+        </div>
+
 
     </main>
+
+    <script>
+        function repetirHTML() {
+            const containerEventos = document.querySelector('.container_eventos');
+            const eventoItem = document.getElementById('evento_item');
+            const repeticoes = 10; // Quantas vezes repetir // Quantas vezes repetir
+
+            for (let i = 1; i < repeticoes; i++) { // Começa em 1 porque o primeiro já existe
+                const clone = eventoItem.cloneNode(true); // Clona o elemento com todo seu conteúdo
+                clone.id = `evento_item_${i}`; // Define um novo ID para evitar conflitos
+                containerEventos.appendChild(clone); // Adiciona o clone ao container
+                }
+        }
+
+        repetirHTML();
+    </script>
+
+
 </body>
 <footer></footer>
 
