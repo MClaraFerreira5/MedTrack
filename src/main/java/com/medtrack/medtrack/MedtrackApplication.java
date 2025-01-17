@@ -1,8 +1,5 @@
 package com.medtrack.medtrack;
 
-import com.medtrack.medtrack.model.DadosUsuario;
-import com.medtrack.medtrack.service.ConsumirApi;
-import com.medtrack.medtrack.service.ConverteDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +13,9 @@ public class MedtrackApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("meu Deus");
+
+
 
     }
 }

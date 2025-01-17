@@ -1,18 +1,33 @@
 package com.medtrack.medtrack.model;
 
+import jakarta.persistence.*;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DadosUsuario {
+@Entity
+@Table(name = "Usuarios")
+public class Usuario {
 
-    private String tipoConta;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Enumerated(EnumType.STRING)
+    private Categoria tipoConta;
     private String nome;
     private String email;
-    private String nomeUsuario;
     private String senhaHashed;
     private String dataNascimento;
 
-    public DadosUsuario(String nome, String email, String nomeUsuario, String senha, String tipoConta, String dataNascimento) {
+    @Column (unique = true)
+    private String nomeUsuario;
+
+    private List<Medicamento> medicamento = new ArrayList<>();
+
+    public Usuario(String nome, String email, String nomeUsuario, String senha, Categoria tipoConta, String dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.nomeUsuario = nomeUsuario;
@@ -36,6 +51,14 @@ public class DadosUsuario {
         }
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -44,7 +67,7 @@ public class DadosUsuario {
         return dataNascimento;
     }
 
-    public String getTipoConta() {
+    public Categoria getTipoConta() {
         return tipoConta;
     }
 
@@ -76,7 +99,7 @@ public class DadosUsuario {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setTipoConta(String tipoConta) {
+    public void setTipoConta(Categoria tipoConta) {
         this.tipoConta = tipoConta;
     }
 
