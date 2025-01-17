@@ -69,6 +69,18 @@
                 item.querySelector('.dropdown-content').style.display = 'none';
             });
         });
+
+        document.getElementById('medication-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio do formulário para o servidor
+
+            const name = document.getElementById('med-name').value;
+            const time = document.getElementById('med-time').value;
+            const doses = document.getElementById('med-doses').value;
+            const duration = document.getElementById('med-duration').value;
+
+            const alertDiv = document.getElementById('alert');
+            alertDiv.innerHTML = `Remédio cadastrado com sucesso!<br><strong>Nome:</strong> ${name}<br><strong>Hora:</strong> ${time}<br><strong>Doses por dia:</strong> ${doses}<br><strong>Duração:</strong> ${duration} dias`;
+        });
     </script>
     </main>
     </body>
