@@ -1,9 +1,11 @@
 package com.medtrack.medtrack.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,21 +15,36 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private long id;
 
     @Enumerated(EnumType.STRING)
+    @JsonProperty("tipoConta")
     private Categoria tipoConta;
+
+    @JsonProperty("nome")
     private String nome;
+
+    @JsonProperty("email")
     private String email;
+
+    @JsonProperty("senha")
     private String senhaHashed;
-    private String dataNascimento;
+
+    @JsonProperty("dataNascimento")
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
 
     @Column (unique = true)
+    @JsonProperty("nomeUsuario")
     private String nomeUsuario;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Medicamento> medicamentos = new ArrayList<>();
 
-    private List<Medicamento> medicamento = new ArrayList<>();
+    public Usuario() {}
 
-    public Usuario(String nome, String email, String nomeUsuario, String senha, Categoria tipoConta, String dataNascimento) {
+    public Usuario(String nome, String email, String nomeUsuario, String senha, Categoria tipoConta, LocalDate dataNascimento) {
         this.nome = nome;
         this.email = email;
         this.nomeUsuario = nomeUsuario;
@@ -63,8 +80,12 @@ public class Usuario {
         return nome;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = LocalDate.parse(dataNascimento);
     }
 
     public Categoria getTipoConta() {
@@ -91,16 +112,16 @@ public class Usuario {
         this.nomeUsuario = nomeUsuario;
     }
 
-    public String getSenhaHashed() {
+    public String getSenha() {
         return senhaHashed;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
     }
 
     public void setTipoConta(Categoria tipoConta) {
         this.tipoConta = tipoConta;
+    }
+
+    public void setSenha(String senha) {
+        this.senhaHashed = hashSenha(senha);
     }
 
     public void atualizarSenha(String novaSenha) {
@@ -112,6 +133,8 @@ public class Usuario {
         return "Nome: " + nome + ", Email: " + email + ", Nome de usuário: " + nomeUsuario;
     }
 }
+
+
 
 
 
