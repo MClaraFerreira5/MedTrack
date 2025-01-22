@@ -38,6 +38,7 @@ public class Usuario {
     @Column (unique = true)
     @JsonProperty("nomeUsuario")
     private String nomeUsuario;
+
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Medicamento> medicamentos = new ArrayList<>();

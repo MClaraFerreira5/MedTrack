@@ -51,9 +51,9 @@
                     <div id="checkbox-tipo-conta">
                         <fieldset>
                             <legend>Escolha o tipo de conta:</legend>
-                            <input type="radio" id="Administrador" name="tipoConta" value ="ADMINISTRADOR" checked />
+                            <input type="radio" id="Administrador" name="tipoConta" value="ADMINISTRADOR" checked />
                             <label for="ADMINISTRADOR">Administrador</label>
-                            <input type="radio" id="Pessoal" name="tipoConta"  value="PESSOAL"/>
+                            <input type="radio" id="Pessoal" name="tipoConta" value="PESSOAL" />
                             <label for="PESSOAL">Pessoal</label>
                         </fieldset>
                     </div>
@@ -107,6 +107,7 @@
                 })
                     .then(response => {
                         if (!response.ok) {
+                            // Se a resposta não for bem-sucedida, retorna o JSON com erro
                             return response.json().then(err => {
                                 console.error("Erro no backend:", err);
                                 alert("Erro ao cadastrar usuário: " + err.error);
@@ -116,13 +117,14 @@
                     })
                     .then(data => {
                         console.log(data);
-                        alert("Usuário cadastrado com sucesso!");
+                        alert(data.message); // Exibe a mensagem de sucesso
                     })
                     .catch(error => {
                         console.error("Erro ao cadastrar usuário:", error);
                         alert("Erro ao cadastrar usuário");
-                    })
                     });
+            });
+
 
         </script>
 
