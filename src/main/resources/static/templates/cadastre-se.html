@@ -105,24 +105,7 @@
                     },
                     body: JSON.stringify(usuario)
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            // Se a resposta não for bem-sucedida, retorna o JSON com erro
-                            return response.json().then(err => {
-                                console.error("Erro no backend:", err);
-                                alert("Erro ao cadastrar usuário: " + err.error);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log(data);
-                        alert(data.message); // Exibe a mensagem de sucesso
-                    })
-                    .catch(error => {
-                        console.error("Erro ao cadastrar usuário:", error);
-                        alert("Erro ao cadastrar usuário");
-                    });
+                    
             });
 
 
