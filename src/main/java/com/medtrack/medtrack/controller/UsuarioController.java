@@ -1,9 +1,7 @@
 package com.medtrack.medtrack.controller;
 
-import com.medtrack.medtrack.model.Usuario;
-import com.medtrack.medtrack.principal.Principal;
+import com.medtrack.medtrack.model.usuario.Usuario;
 import com.medtrack.medtrack.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:8081")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioRepository repositorio;
+    private final UsuarioRepository repositorio;
+
+    public UsuarioController(UsuarioRepository repositorio) {
+        this.repositorio = repositorio;
+    }
 
     @PostMapping("/cadastre-se")
     public ResponseEntity<String> cadastrarUsuario(@RequestBody Usuario usuario) {

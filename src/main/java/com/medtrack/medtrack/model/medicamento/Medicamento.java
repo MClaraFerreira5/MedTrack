@@ -1,5 +1,6 @@
-package com.medtrack.medtrack.model;
+package com.medtrack.medtrack.model.medicamento;
 
+import com.medtrack.medtrack.model.usuario.Usuario;
 import jakarta.persistence.*;
 
 @Entity

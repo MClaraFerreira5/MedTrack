@@ -1,6 +1,8 @@
-package com.medtrack.medtrack.model;
+package com.medtrack.medtrack.model.usuario;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.medtrack.medtrack.model.Categoria;
+import com.medtrack.medtrack.model.medicamento.Medicamento;
 import jakarta.persistence.*;
 
 import java.security.MessageDigest;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Usuarios")
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
@@ -19,7 +21,7 @@ public class Usuario {
     private long id;
 
     @Enumerated(EnumType.STRING)
-    @JsonProperty("tipoConta")
+    @JsonProperty("tipo_conta")
     private Categoria tipoConta;
 
     @JsonProperty("nome")
@@ -36,7 +38,7 @@ public class Usuario {
     private LocalDate dataNascimento;
 
     @Column (unique = true)
-    @JsonProperty("nomeUsuario")
+    @JsonProperty("nome_usuario")
     private String nomeUsuario;
 
     
