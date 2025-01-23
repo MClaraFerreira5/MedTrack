@@ -1,4 +1,4 @@
-package com.medtrack.medtrack.service;
+package com.medtrack.medtrack.service.conversor;
 
 
 public interface IConverteDados {

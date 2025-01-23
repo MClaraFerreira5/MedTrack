@@ -1,7 +1,6 @@
 package com.medtrack.medtrack.model.usuario;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.medtrack.medtrack.model.Categoria;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +27,7 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     @JsonProperty("tipo_conta")
-    private Categoria tipoConta;
+    private CategoriaUsuario tipoConta;
 
     @JsonProperty("nome")
     private String nome;

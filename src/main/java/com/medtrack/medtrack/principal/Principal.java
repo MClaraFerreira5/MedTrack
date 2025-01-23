@@ -1,6 +1,6 @@
 //package com.medtrack.medtrack.principal;
 //
-//import com.medtrack.medtrack.model.Categoria;
+//import com.medtrack.medtrack.model.usuario.CategoriaUsuario;
 //import com.medtrack.medtrack.model.usuario.Usuario;
 //import com.medtrack.medtrack.repository.UsuarioRepository;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -40,18 +40,18 @@
 //            int tipoContaOpcao = scanner.nextInt();
 //            scanner.nextLine();
 //
-//            Categoria tipoConta;
+//            CategoriaUsuario tipoConta;
 //            switch (tipoContaOpcao) {
 //                case 1:
-//                    tipoConta = Categoria.ADMINISTRADOR;
+//                    tipoConta = CategoriaUsuario.ADMINISTRADOR;
 //                    break;
 //                case 2:
-//                    tipoConta = Categoria.PESSOAL;
+//                    tipoConta = CategoriaUsuario.PESSOAL;
 //                    break;
 //
 //                default:
 //                    System.out.println("Opção inválida! Definindo como Básica.");
-//                    tipoConta = Categoria.PESSOAL;
+//                    tipoConta = CategoriaUsuario.PESSOAL;
 //                    break;
 //            }
 //

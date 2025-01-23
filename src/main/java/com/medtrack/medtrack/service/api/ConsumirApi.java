@@ -1,4 +1,4 @@
-package com.medtrack.medtrack.service;
+package com.medtrack.medtrack.service.api;
 
 import java.io.IOException;
 import java.net.URI;
