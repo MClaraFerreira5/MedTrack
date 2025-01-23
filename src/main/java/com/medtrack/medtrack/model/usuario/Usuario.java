@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.medtrack.medtrack.model.Categoria;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +14,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString
 public class Usuario {
 
     @Id
@@ -37,25 +43,13 @@ public class Usuario {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
-    @Column (unique = true)
+    @Column(unique = true)
     @JsonProperty("nome_usuario")
     private String nomeUsuario;
 
-    
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Medicamento> medicamentos = new ArrayList<>();
-
-    public Usuario() {}
-
-    public Usuario(String nome, String email, String nomeUsuario, String senha, Categoria tipoConta, LocalDate dataNascimento) {
-        this.nome = nome;
-        this.email = email;
-        this.nomeUsuario = nomeUsuario;
-        this.senhaHashed = hashSenha(senha);
-        this.tipoConta = tipoConta;
-        this.dataNascimento = dataNascimento;
-
-    }
 
     private static String hashSenha(String senha) {
         try {
@@ -69,71 +63,6 @@ public class Usuario {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Erro ao hash a senha", e);
         }
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = LocalDate.parse(dataNascimento);
-    }
-
-    public Categoria getTipoConta() {
-        return tipoConta;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNomeUsuario() {
-        return nomeUsuario;
-    }
-
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-    }
-
-    public String getSenha() {
-        return senhaHashed;
-    }
-
-    public void setTipoConta(Categoria tipoConta) {
-        this.tipoConta = tipoConta;
-    }
-
-    public void setSenha(String senha) {
-        this.senhaHashed = hashSenha(senha);
-    }
-
-    public void atualizarSenha(String novaSenha) {
-        this.senhaHashed = hashSenha(novaSenha);
-    }
-
-    @Override
-    public String toString() {
-        return "Nome: " + nome + ", Email: " + email + ", Nome de usuário: " + nomeUsuario;
     }
 }
 
