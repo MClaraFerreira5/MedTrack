@@ -31,7 +31,7 @@ public class UsuarioController {
                 .buildAndExpand(usuario.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(usuario);
+        return ResponseEntity.created(uri).build();
     }
 
 }
