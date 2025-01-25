@@ -1,8 +1,9 @@
 package com.medtrack.medtrack.model.usuario;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
+import com.medtrack.medtrack.model.usuario.dto.DadoUsuarioCadastro;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.security.MessageDigest;
@@ -22,33 +23,29 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
     private long id;
 
     @Enumerated(EnumType.STRING)
-    @JsonProperty("tipo_conta")
     private CategoriaUsuario tipoConta;
-
-    @JsonProperty("nome")
     private String nome;
-
-    @JsonProperty("email")
     private String email;
-
-    @JsonProperty("senha")
     private String senhaHashed;
-
-    @JsonProperty("dataNascimento")
-    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
-
-    @Column(unique = true)
-    @JsonProperty("nome_usuario")
     private String nomeUsuario;
-
+    private String numeroTelefone;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Medicamento> medicamentos = new ArrayList<>();
+
+    public Usuario(@Valid DadoUsuarioCadastro dados) {
+        nome = dados.nome();
+        email = dados.email();
+        tipoConta = dados.categoria();
+        numeroTelefone = dados.numeroTelefone();
+        senhaHashed = hashSenha(dados.senha());
+        dataNascimento = dados.dataNascimento();
+        nomeUsuario = dados.nomeUsuario();
+    }
 
     private static String hashSenha(String senha) {
         try {

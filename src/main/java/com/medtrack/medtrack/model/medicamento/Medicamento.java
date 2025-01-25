@@ -2,9 +2,15 @@ package com.medtrack.medtrack.model.medicamento;
 
 import com.medtrack.medtrack.model.usuario.Usuario;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "Medicamentos")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString
 public class Medicamento {
 
     @Id
@@ -32,72 +38,4 @@ public class Medicamento {
         this.observacoes = observacoes;
     }
 
-    public String getPrincipioAtivo() {
-        return principioAtivo;
-    }
-
-    public void setPrincipioAtivo(String principioAtivo) {
-        this.principioAtivo = principioAtivo;
-    }
-
-    public int getQuantidadeEstoque() {
-        return quantidadeEstoque;
-    }
-
-    public void setQuantidadeEstoque(int quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
-    }
-
-    public double getDosagem() {
-        return dosagem;
-    }
-
-    public void setDosagem(double dosagem) {
-        this.dosagem = dosagem;
-    }
-
-    public String getFrequenciaUso() {
-        return frequenciaUso;
-    }
-
-    public void setFrequenciaUso(String frequenciaUso) {
-        this.frequenciaUso = frequenciaUso;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public String toString() {
-        return "Medicamento{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", principioAtivo='" + principioAtivo + '\'' +
-                ", quantidadeEstoque=" + quantidadeEstoque +
-                ", dosagem=" + dosagem +
-                ", frequenciaUso='" + frequenciaUso + '\'' +
-                ", observacoes='" + observacoes + '\'' +
-                '}';
-    }
 }
