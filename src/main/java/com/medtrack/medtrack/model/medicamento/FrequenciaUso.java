@@ -30,8 +30,7 @@ public class FrequenciaUso {
     private List<String> diasSemana;
     private boolean usoContinuo;
 
-    @Column(columnDefinition = "jsonb")
-    @Convert(converter = ConverteDados.class)
+    @ElementCollection
     private List<LocalTime> horariosEspecificos = null;
     private int intervaloHoras = 0;
     private LocalTime primeiroHorario = null;
