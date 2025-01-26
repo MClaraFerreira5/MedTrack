@@ -21,14 +21,17 @@ public class Medicamento {
     private String principioAtivo;
     private int quantidadeEstoque;
     private double dosagem;
-    private String frequenciaUso;
     private String observacoes;
 
     @ManyToOne
     private Usuario usuario;
 
+    @OneToOne
+    @JoinColumn(name = "frequencia_uso_id")
+    private FrequenciaUso frequenciaUso;
+
     public Medicamento(Long id, int quantidadeEstoque, String nome, String principioAtivo,
-                       double dosagem, String frequenciaUso, String observacoes) {
+                       double dosagem, FrequenciaUso frequenciaUso, String observacoes) {
         this.id = id;
         this.quantidadeEstoque = quantidadeEstoque;
         this.nome = nome;
