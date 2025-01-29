@@ -105,4 +105,155 @@ GET /usuarios/1
 
 ## Medicamentos:
 
+## Dependentes:
 
+## Cadastro de dependente `POST`
+
+```
+/dependentes/cadastrar
+```
+
+### Exemplo de Corpo da Requisição
+
+```json
+{
+  "nome": "Carlos Souza",
+  "email": "carlos.souza@example.com",
+  "telefone": "+5511988887777",
+  "administradorId": 1
+}
+```
+
+> Todos os parâmetros são obrigatórios.  
+> O campo `email` deve ser um endereço de e-mail válido.  
+> O campo `administradorId` deve ser um ID válido de um administrador existente.  
+
+## Atualizar dependente `PUT`
+
+```
+/dependentes
+```
+
+### Exemplo de Corpo da Requisição
+
+```json
+{
+  "id": 10,
+  "nome": "Carlos Souza",
+  "email": "carlos.souza@example.com",
+  "telefone": "+5511988887777"
+}
+```
+
+> O campo `id` é obrigatório e deve corresponder a um dependente existente.  
+> Os campos `nome`, `email` e `telefone` são opcionais, mas caso fornecidos, devem ser válidos.  
+
+## Listar todos os dependentes `GET`
+
+```
+/dependentes
+```
+
+### Exemplo de Requisição
+
+```
+GET /dependentes
+```
+
+### Exemplo de Resposta
+
+**Status: `200 OK`**
+
+```json
+[
+  {
+    "id": 10,
+    "nome": "Carlos Souza",
+    "email": "carlos.souza@example.com",
+    "telefone": "+5511988887777"
+  },
+  {
+    "id": 11,
+    "nome": "Mariana Lima",
+    "email": "mariana.lima@example.com",
+    "telefone": "+5511977776666"
+  }
+]
+```
+
+> Retorna uma lista com todos os dependentes cadastrados.  
+> Se não houver dependentes cadastrados, a resposta será `204 No Content`.
+
+---
+
+## Listar dependentes por administrador `GET`
+
+```
+/dependentes/administrador/{id}
+```
+
+### Parâmetros de Caminho
+
+| Parâmetro       | Tipo  | Descrição                                      |
+|-----------------|-------|------------------------------------------------|
+| `id`           | Long  | ID do administrador para filtrar dependentes  |
+
+### Exemplo de Requisição
+
+```
+GET /dependentes/administrador/1
+```
+
+### Exemplo de Resposta
+
+**Status: `200 OK`**
+
+```json
+[
+  {
+    "id": 10,
+    "nome": "Carlos Souza",
+    "email": "carlos.souza@example.com",
+    "telefone": "+5511988887777"
+  }
+]
+```
+
+> Retorna uma lista com os dependentes do administrador informado.  
+> Se o administrador não tiver dependentes, a resposta será `204 No Content`.
+
+---
+
+## Detalhar dependente por ID `GET`
+
+```
+/dependentes/{id}
+```
+
+### Parâmetros de Caminho
+
+| Parâmetro  | Tipo  | Descrição                         |
+|------------|-------|----------------------------------|
+| `id`       | Long  | ID do dependente a ser buscado |
+
+### Exemplo de Requisição
+
+```
+GET /dependentes/10
+```
+
+### Exemplo de Resposta
+
+**Status: `200 OK`**
+
+```json
+{
+  "id": 10,
+  "nome": "Carlos Souza",
+  "email": "carlos.souza@example.com",
+  "telefone": "+5511988887777"
+}
+```
+
+> Retorna os detalhes do dependente correspondente ao `id` informado.  
+> Se o dependente não for encontrado, a resposta será `204 No Content`.
