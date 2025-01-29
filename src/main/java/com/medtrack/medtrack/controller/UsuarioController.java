@@ -40,7 +40,7 @@ public class UsuarioController {
 
     @GetMapping
     public ResponseEntity<Page<DetalhamentoUsuario>> listar( @PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        var page = repositorio.findAllUsurios(paginacao).map(DetalhamentoUsuario::new);
+        var page = repositorio.findAll(paginacao).map(DetalhamentoUsuario::new);
         return ResponseEntity.ok(page);
     }
 
