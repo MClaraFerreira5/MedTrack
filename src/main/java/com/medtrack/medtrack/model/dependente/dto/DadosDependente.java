@@ -1,6 +1,5 @@
-package com.medtrack.medtrack.model.usuario.dto;
+package com.medtrack.medtrack.model.dependente.dto;
 
-import com.medtrack.medtrack.model.usuario.Usuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

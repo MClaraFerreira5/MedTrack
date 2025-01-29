@@ -1,5 +1,6 @@
 package com.medtrack.medtrack.model.usuario;
 
+import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioCadastro;
 import jakarta.persistence.*;

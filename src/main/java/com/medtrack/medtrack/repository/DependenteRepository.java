@@ -1,6 +1,6 @@
 package com.medtrack.medtrack.repository;
 
-import com.medtrack.medtrack.model.usuario.Dependente;
+import com.medtrack.medtrack.model.dependente.Dependente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

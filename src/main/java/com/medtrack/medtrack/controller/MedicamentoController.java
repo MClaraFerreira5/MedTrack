@@ -32,7 +32,7 @@ public class MedicamentoController {
                 .toUri();
 
 
-        return ResponseEntity.created(uri).body(medicamento);
+        return ResponseEntity.created(uri).build();
     }
 }
 

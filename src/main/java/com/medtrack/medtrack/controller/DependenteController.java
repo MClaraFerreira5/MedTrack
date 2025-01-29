@@ -1,10 +1,11 @@
 package com.medtrack.medtrack.controller;
 
-import com.medtrack.medtrack.model.usuario.Dependente;
-import com.medtrack.medtrack.model.usuario.dto.DadosDependente;
+import com.medtrack.medtrack.model.dependente.Dependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
 import com.medtrack.medtrack.service.usuario.DependenteService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,13 +17,16 @@ import java.util.List;
 @RequestMapping("/dependentes")
 public class DependenteController {
 
-    @Autowired
-    private DependenteService dependenteService;
+    private final DependenteService dependenteService;
+
+    public DependenteController(DependenteService dependenteService) {
+        this.dependenteService = dependenteService;
+    }
 
     @Transactional
     @PostMapping("/cadastrar")
     public ResponseEntity<Dependente> cadastrar(@RequestBody DadosDependente dadosDependente) {
-        Dependente dependente = dependenteService.cadastrar(dadosDependente);
+        var dependente = dependenteService.cadastrar(dadosDependente);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -32,40 +36,38 @@ public class DependenteController {
         return ResponseEntity.created(uri).body(dependente);
     }
 
-    @GetMapping("/home")
+    @GetMapping
     public ResponseEntity<List<Dependente>> listarTodos() {
         List<Dependente> dependentes = dependenteService.listarTodos();
         return ResponseEntity.ok(dependentes);
     }
 
-    @GetMapping("/{administradorId}")
+    @GetMapping("/administrador/{id}")
     public ResponseEntity<List<Dependente>> listarPorAdministrador(@PathVariable Long administradorId) {
         List<Dependente> dependentes = dependenteService.listarPorAdministradorId(administradorId);
-        return ResponseEntity.ok(dependentes);
+        return dependentes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dependentes);
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Dependente> buscarPorId(@PathVariable Long id) {
-        Dependente dependente = dependenteService.buscarPorId(id);
-        if (dependente == null) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Dependente> detalharDependente(@PathVariable Long id) {
+        return dependenteService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
+
+    }
+
+    @Transactional
+    @PutMapping
+    public ResponseEntity atualizar(@RequestBody @Valid DadosUpdateDependente dados) {
+        var dependente = dependenteService.atualizar(dados);
+
         return ResponseEntity.ok(dependente);
     }
 
     @Transactional
-    @PutMapping("/{id}")
-    public ResponseEntity<Dependente> atualizar(@PathVariable Long id, @RequestBody DadosDependente dadosDependente) {
-        Dependente dependenteAtualizado = dependenteService.atualizar(id, dadosDependente);
-        if (dependenteAtualizado == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(dependenteAtualizado);
-    }
-
-    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    public ResponseEntity deletar(@PathVariable Long id) {
         if (!dependenteService.existePorId(id)) {
             return ResponseEntity.notFound().build();
         }

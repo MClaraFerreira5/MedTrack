@@ -103,8 +103,6 @@ GET /usuarios/1
 }
 ```
 
-
-
-
 ## Medicamentos:
+
 

@@ -3,40 +3,45 @@ package com.medtrack.medtrack.service.medicamento;
 import com.medtrack.medtrack.model.medicamento.FrequenciaUso;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
-import com.medtrack.medtrack.model.usuario.Dependente;
 import com.medtrack.medtrack.model.usuario.Usuario;
 import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.FrequenciaUsoRepository;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MedicamentoService {
 
-    @Autowired
-    private MedicamentoRepository medicamentoRepository;
+    private final MedicamentoRepository medicamentoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private DependenteRepository dependenteRepository;
+    private final DependenteRepository dependenteRepository;
 
-    @Autowired
-    private FrequenciaUsoRepository frequenciaUsoRepository;
+    private final FrequenciaUsoRepository frequenciaUsoRepository;
+
+    public MedicamentoService(MedicamentoRepository medicamentoRepository, UsuarioRepository usuarioRepository,
+                              DependenteRepository dependenteRepository, FrequenciaUsoRepository frequenciaUsoRepository) {
+        this.medicamentoRepository = medicamentoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.dependenteRepository = dependenteRepository;
+        this.frequenciaUsoRepository = frequenciaUsoRepository;
+    }
 
 
     public Medicamento criarMedicamento(DadosMedicamento dadosMedicamento) {
-        // Buscando o usuário e dependente, se necessário
+        Medicamento medicamento;
+        // Associa o medicamento ao usuário
         Usuario usuario = usuarioRepository.findById(dadosMedicamento.usuarioId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        Dependente dependente = null;
+
+        // Caso tenha sido informado o dependenteId, o usuário é um administrador
         if (dadosMedicamento.dependenteId() != null) {
-            dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
+            var dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
                     .orElseThrow(() -> new IllegalArgumentException("Dependente não encontrado"));
+
         }
 
         // Criando o medicamento
@@ -50,7 +55,7 @@ public class MedicamentoService {
         }
 
 
-        Medicamento medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
+        medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
         medicamento.setFrequenciaUso(frequenciaUso);
 
         // Salvando e retornando o medicamento

@@ -1,10 +1,8 @@
 package com.medtrack.medtrack.model.medicamento;
 
-import com.medtrack.medtrack.model.medicamento.dto.DadosFrequenciaUso;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
-import com.medtrack.medtrack.model.usuario.Dependente;
+import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.usuario.Usuario;
-import com.medtrack.medtrack.model.usuario.dto.DadosDependente;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

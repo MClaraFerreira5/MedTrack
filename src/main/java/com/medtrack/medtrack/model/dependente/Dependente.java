@@ -1,12 +1,16 @@
-package com.medtrack.medtrack.model.usuario;
+package com.medtrack.medtrack.model.dependente;
 
-import com.medtrack.medtrack.model.usuario.dto.DadosDependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
+import com.medtrack.medtrack.model.usuario.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Optional;
 
 @Entity
 @Table(name = "Dependentes")
@@ -39,6 +43,17 @@ public class Dependente {
         this.administrador = administrador;
     }
 
-    public Dependente(DadosDependente dadosDependente) {
+    public void atualizarInformacoes(DadosUpdateDependente dados) {
+        if(dados.nome() != null) {
+            nome = dados.nome();
+        }
+
+        if(dados.email() != null) {
+            email = dados.email();
+        }
+
+        if(dados.telefone() != null) {
+            telefone = dados.telefone();
+        }
     }
 }

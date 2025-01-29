@@ -19,6 +19,11 @@ public class TratadorDeErros {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(AdministradorNaoEncontradoException.class)
+    public ResponseEntity<Object> handleAdministradorNaoEncontrado(AdministradorNaoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity tratarErro400(MethodArgumentNotValidException ex) {
         var erros = ex.getFieldErrors();

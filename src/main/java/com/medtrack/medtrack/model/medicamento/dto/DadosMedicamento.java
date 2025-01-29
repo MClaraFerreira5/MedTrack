@@ -23,11 +23,12 @@ public record DadosMedicamento(
         @NotNull
         Long usuarioId,
 
+        Long dependenteId,
+
         @NotNull
         @Valid
-        DadosFrequenciaUso frequenciaUso,
+        DadosFrequenciaUso frequenciaUso
 
-        Long dependenteId
 
 
 ) {
