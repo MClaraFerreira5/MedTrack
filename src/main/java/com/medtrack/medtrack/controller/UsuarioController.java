@@ -6,6 +6,9 @@ import com.medtrack.medtrack.model.usuario.dto.DetalhamentoUsuario;
 import com.medtrack.medtrack.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -33,6 +36,12 @@ public class UsuarioController {
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DetalhamentoUsuario>> listar( @PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+        var page = repositorio.findAllUsurios(paginacao).map(DetalhamentoUsuario::new);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
