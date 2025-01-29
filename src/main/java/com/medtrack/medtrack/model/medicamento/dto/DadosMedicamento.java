@@ -1,6 +1,5 @@
 package com.medtrack.medtrack.model.medicamento.dto;
 
-import com.medtrack.medtrack.model.medicamento.FrequenciaUso;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

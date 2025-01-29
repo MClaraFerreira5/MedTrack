@@ -1,10 +1,8 @@
 package com.medtrack.medtrack.model.medicamento;
 
 import com.medtrack.medtrack.model.medicamento.dto.DadosFrequenciaUso;
-import com.medtrack.medtrack.service.conversor.ConverteDados;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 

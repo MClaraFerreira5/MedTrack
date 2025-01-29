@@ -1,7 +1,7 @@
 package com.medtrack.medtrack.model.usuario;
 
 import com.medtrack.medtrack.model.medicamento.Medicamento;
-import com.medtrack.medtrack.model.usuario.dto.DadoUsuarioCadastro;
+import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioCadastro;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -40,7 +40,7 @@ public class Usuario {
     @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dependente> dependentes = new ArrayList<>();
 
-    public Usuario(@Valid DadoUsuarioCadastro dados) {
+    public Usuario(@Valid DadosUsuarioCadastro dados) {
         nome = dados.nome();
         email = dados.email();
         tipoConta = dados.categoria();

@@ -40,7 +40,7 @@ public class Medicamento {
 
     @OneToOne
     @JoinColumn(name = "frequencia_uso_id")
-    private @NotNull
+    @NotNull
     @Valid FrequenciaUso frequenciaUso;
 
 

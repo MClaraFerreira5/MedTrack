@@ -22,7 +22,7 @@ public class MedicamentoController {
         this.medicamentoService = medicamentoService;
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping("/cadastro")
     public ResponseEntity<Medicamento> create(@RequestBody @Valid DadosMedicamento dadosMedicamento) {
         Medicamento medicamento = medicamentoService.criarMedicamento(dadosMedicamento);
 

@@ -1,7 +1,8 @@
 package com.medtrack.medtrack.controller;
 
 import com.medtrack.medtrack.model.usuario.Usuario;
-import com.medtrack.medtrack.model.usuario.dto.DadoUsuarioCadastro;
+import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioCadastro;
+import com.medtrack.medtrack.model.usuario.dto.DetalhamentoUsuario;
 import com.medtrack.medtrack.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class UsuarioController {
 
     @PostMapping("/cadastro")
     @Transactional
-    public ResponseEntity cadastrarUsuario(@RequestBody @Valid DadoUsuarioCadastro dados) {
+    public ResponseEntity cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
         var usuario = new Usuario(dados);
         repositorio.save(usuario);
 
@@ -32,6 +33,13 @@ public class UsuarioController {
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalharUsuarios(long id) {
+        var usuario = repositorio.getReferenceById(id);
+        return ResponseEntity.ok(new DetalhamentoUsuario(usuario));
+
     }
 
 }
