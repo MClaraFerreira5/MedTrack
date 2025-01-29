@@ -10,6 +10,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public record DadosFrequenciaUso(
+        Long id,
+
         @NotNull
         FrequenciaUsoTipo frequenciaUsoTipo,
 

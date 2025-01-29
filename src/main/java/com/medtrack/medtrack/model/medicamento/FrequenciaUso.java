@@ -4,6 +4,8 @@ import com.medtrack.medtrack.model.medicamento.dto.DadosFrequenciaUso;
 import com.medtrack.medtrack.service.conversor.ConverteDados;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,6 +19,7 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
+@Table(name = "frequencia_uso")
 public class FrequenciaUso {
 
     @Id
@@ -26,13 +29,15 @@ public class FrequenciaUso {
     @Enumerated(EnumType.STRING)
     private FrequenciaUsoTipo frequenciaUsoTipo;
 
+    @NotEmpty
     @ElementCollection
     private List<String> diasSemana;
+
     private boolean usoContinuo;
 
     @ElementCollection
     private List<LocalTime> horariosEspecificos = null;
-    private int intervaloHoras = 0;
+    private Integer intervaloHoras = 0;
     private LocalTime primeiroHorario = null;
     private LocalDate dataInicio = null;
     private LocalDate dataTermino = null;

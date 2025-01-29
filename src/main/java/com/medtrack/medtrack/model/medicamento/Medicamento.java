@@ -1,12 +1,19 @@
 package com.medtrack.medtrack.model.medicamento;
 
+import com.medtrack.medtrack.model.medicamento.dto.DadosFrequenciaUso;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
+import com.medtrack.medtrack.model.usuario.Dependente;
 import com.medtrack.medtrack.model.usuario.Usuario;
+import com.medtrack.medtrack.model.usuario.dto.DadosDependente;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
 @Table(name = "Medicamentos")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -14,8 +21,8 @@ import lombok.*;
 public class Medicamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera valores automaticamente no banco
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String nome;
     private String principioAtivo;
@@ -24,21 +31,42 @@ public class Medicamento {
     private String observacoes;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "dependente_id")
+    private Dependente dependente;
 
     @OneToOne
     @JoinColumn(name = "frequencia_uso_id")
-    private FrequenciaUso frequenciaUso;
+    private @NotNull
+    @Valid FrequenciaUso frequenciaUso;
 
-    public Medicamento(Long id, int quantidadeEstoque, String nome, String principioAtivo,
-                       double dosagem, FrequenciaUso frequenciaUso, String observacoes) {
-        this.id = id;
-        this.quantidadeEstoque = quantidadeEstoque;
-        this.nome = nome;
-        this.principioAtivo = principioAtivo;
-        this.dosagem = dosagem;
-        this.frequenciaUso = frequenciaUso;
-        this.observacoes = observacoes;
+
+    public Medicamento(@Valid DadosMedicamento dadosMedicamento, Usuario usuario) {
+        nome = dadosMedicamento.nome();
+        principioAtivo = dadosMedicamento.principioAtivo();
+        quantidadeEstoque = dadosMedicamento.quantidadeEstoque();
+        dosagem = dadosMedicamento.dosagem();
+        observacoes = dadosMedicamento.observacoes();
+        this.usuario = usuario;
+        var dadosFrequenciaUso = dadosMedicamento.frequenciaUso();
+        this.frequenciaUso = new FrequenciaUso(dadosFrequenciaUso);
     }
 
+    public Medicamento(@Valid DadosMedicamento dadosMedicamento, Dependente dependente) {
+        nome = dadosMedicamento.nome();
+        principioAtivo = dadosMedicamento.principioAtivo();
+        quantidadeEstoque = dadosMedicamento.quantidadeEstoque();
+        dosagem = dadosMedicamento.dosagem();
+        observacoes = dadosMedicamento.observacoes();
+        var dadosFrequenciaUso = dadosMedicamento.frequenciaUso();
+        this.frequenciaUso = new FrequenciaUso(dadosFrequenciaUso);
+        this.dependente = dependente;
+    }
+
+
+    public Medicamento(DadosMedicamento dadosMedicamento, Usuario usuario, Dependente dependente) {
+    }
 }

@@ -37,6 +37,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Medicamento> medicamentos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dependente> dependentes = new ArrayList<>();
+
     public Usuario(@Valid DadoUsuarioCadastro dados) {
         nome = dados.nome();
         email = dados.email();
