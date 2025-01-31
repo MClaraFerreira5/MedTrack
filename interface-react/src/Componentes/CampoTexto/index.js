@@ -5,18 +5,22 @@ const CampoTexto = (props) => {
 
     const placeholderModificada = `${props.placeholder}...`
 
-    //let valor = 'Jesus'
-
     const [valor, setValor] = useState('')
 
     const aoDigitado = (evento) => {
-        props.aoAlterado()
+        setValor(evento.target.value)
+        if (props.aoAlterado){
+            props.aoAlterado(evento.target.value)
+        }
+        
     }
 
     return(
         <div className="campo-texto"> 
             <label>{props.label}</label>
-            <input placeholder={props.placeholderModificada}/>
+            <input 
+            placeholder={placeholderModificada} 
+            type={props.type}/>
         </div>
     )
 }

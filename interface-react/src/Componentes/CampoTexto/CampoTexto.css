@@ -1,4 +1,20 @@
 .campo-texto{
     display: flex;
     flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+
+}
+
+.campo-texto label{
+    text-align: start;
+    
+}
+
+.campo-texto input {
+    border-radius: 15px;
+    height: 40px;
+    width: 95%;
+    border: lightskyblue solid;
+
 }

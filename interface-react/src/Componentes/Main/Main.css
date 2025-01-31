@@ -1,0 +1,37 @@
+.container_main{
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    width: 80%;
+}
+
+.container_main section{
+    margin-top: 10%;
+    width: 50%;
+}
+
+.container_main h1{
+    font-size: 32px;
+}
+
+.container_main_botoes{
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+@media screen and (max-width: 425px ) {
+
+    .container_main{
+        flex-direction: column;
+        width: 90%;
+    }
+    .container_main section{
+        margin-top: 10%;
+        width: 90%;
+    }
+    
+    .imagem_container{
+        display: none;
+    }
+}

@@ -1,9 +1,18 @@
+import './Botao.css'
+import { useNavigate } from "react-router-dom";
 
+const Botao = ({label, destino}) => {
+    const navegador = useNavigate();
 
-const Botao = () => {
+    const handleClick = () => {
+        if (destino) {
+            navegador(destino); // Redireciona para a página especificada
+        }
+    };
+
     return(
         <div className='container_botao'>
-            <button>Cadastrar</button>
+            <button onClick={handleClick}>{label}</button>
         </div>
     )
 }

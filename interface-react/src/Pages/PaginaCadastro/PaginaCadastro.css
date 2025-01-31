@@ -1,0 +1,15 @@
+.container_tela{
+    background-color: darkturquoise;
+    height: 100vh;
+    justify-self: center;
+    align-content: center;
+    width: 100%;
+}
+
+.container_cadastro{
+    background-color: white;
+    padding: 50px;
+    text-align: center;
+    width: 50%;
+    justify-self: center;
+}
