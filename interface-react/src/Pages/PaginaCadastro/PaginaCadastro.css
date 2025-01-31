@@ -13,3 +13,9 @@
     width: 50%;
     justify-self: center;
 }
+
+@media screen and (max-width:433px) {
+    .container_cadastro{
+        width: 65%;     
+    }
+}

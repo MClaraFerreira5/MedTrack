@@ -10,7 +10,7 @@ const Main = () => {
                      medicações e notifica você na hora certa. Mantenha sua saúde em dia com um sistema simples e eficiente.</p>
                 <div className="container_main_botoes">
                     <Botao label= "Cadastre-se já" destino="/cadastro"/>
-                    <Botao label= "Login"/>
+                    <Botao label= "Login" destino="/login"/>
                 </div>
             </section>
             <section className="imagem_container">

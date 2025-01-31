@@ -1,26 +1,21 @@
 import { useState } from 'react'
 import './CampoTexto.css'
 
-const CampoTexto = (props) => {
+const CampoTexto = ({ type, label, placeholder, value, onChange,}) => {
 
-    const placeholderModificada = `${props.placeholder}...`
 
     const [valor, setValor] = useState('')
 
-    const aoDigitado = (evento) => {
-        setValor(evento.target.value)
-        if (props.aoAlterado){
-            props.aoAlterado(evento.target.value)
-        }
-        
-    }
+
 
     return(
         <div className="campo-texto"> 
-            <label>{props.label}</label>
+            <label>{label}</label>
             <input 
-            placeholder={placeholderModificada} 
-            type={props.type}/>
+                placeholder={placeholder} 
+                type={type}
+                value={value} // Aqui você associa o valor do input ao estado
+                onChange={onChange}/>
         </div>
     )
 }
