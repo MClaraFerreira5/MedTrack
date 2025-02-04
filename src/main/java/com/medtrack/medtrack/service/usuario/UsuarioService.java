@@ -17,6 +17,6 @@ public class UsuarioService {
     }
 
     public Optional<Usuario> buscarPorId(Long id) {
-        return repository.getUsuariosById();
+        return repository.getUsuariosById(id);
     }
 }
