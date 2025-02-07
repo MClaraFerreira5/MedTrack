@@ -1,5 +1,6 @@
 package com.medtrack.medtrack.service.medicamento;
 
+import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.FrequenciaUso;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
@@ -31,6 +32,7 @@ public class MedicamentoService {
 
 
     public Medicamento criarMedicamento(DadosMedicamento dadosMedicamento) {
+        var dependente = new Dependente();
         Medicamento medicamento;
         // Associa o medicamento ao usuário
         Usuario usuario = usuarioRepository.findById(dadosMedicamento.usuarioId())
@@ -39,7 +41,7 @@ public class MedicamentoService {
 
         // Caso tenha sido informado o dependenteId, o usuário é um administrador
         if (dadosMedicamento.dependenteId() != null) {
-            var dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
+            dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
                     .orElseThrow(() -> new IllegalArgumentException("Dependente não encontrado"));
 
         }
