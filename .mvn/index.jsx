@@ -3,7 +3,7 @@ import Botao from "../Botao";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const FormularioCadastro = ({ campos, botaos, login, h1, p }) => {
+const FormularioCadastro = ({ campos, botaos }) => {
   const [formData, setFormData] = useState(
     campos.reduce((acc, campo) => ({ ...acc, [campo.name]: "" }), {})
   );
@@ -19,10 +19,7 @@ const FormularioCadastro = ({ campos, botaos, login, h1, p }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 sm:shadow-lg sm:shadow-cyan-500/50 sm:p-20 w-3/5">
-        <h1 className="text-2xl font-semibold">{h1}</h1>
-        <p className="mt-4">{p}</p>
-
+    <div className="flex flex-col gap-3">
       {campos.map((campo) => (
         <CampoTexto
           key={campo.name}
@@ -35,22 +32,14 @@ const FormularioCadastro = ({ campos, botaos, login, h1, p }) => {
           onChange={handleChange}
         />
       ))}
-      {login? (
-          <a className="text-blue-500 hover:underline text-sm cursor-pointer" href="/login">
-          Já possui uma conta? Faça o Login
-        </a>
-        ):(<div> </div>)}
 
-      <div className="flex justify-between self-end">
+      <div className="flex justify-between self-end px-5">
         {botaos.map((prop) => (
           <Botao 
             label={prop.label}
             destino={prop.destino}
            />
         ))}
-
-        
-
       </div>
     </div>
   );

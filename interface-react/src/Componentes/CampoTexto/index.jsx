@@ -1,9 +1,11 @@
-const CampoTexto = ({ type, label, placeholder, value, onChange }) => {
+const CampoTexto = ({ type,id, label, placeholder, value, onChange, name }) => {
     return (
       <div className="flex flex-col gap-1">
-        <label className="text-left text-gray-700 font-medium">{label}</label>
+        <label htmlFor={id} className="text-left text-gray-700 font-medium">{label}</label>
         <input
           placeholder={placeholder}
+          name={name}
+          id={id}
           type={type}
           value={value}
           onChange={onChange}

@@ -1,14 +1,26 @@
-import FormularioCadastro2 from "../../Componentes/FormularioCadastro/index2"
-const PaginaCadastro2 = () => {
+import { useState } from "react";
+import FormularioCadastro from "../../Componentes/FormularioCadastro";
+const PaginaCadastro2 = ({h1, p}) => {
+    const [nomeUsuario, setNomeUsuario] = useState("");
+    const [senha, setSenha] = useState("");
+    const [confSenha, setConfSenha] = useState("");
+    
+    const camposCadastro = [
+    { type: "text", id: "nome-usuario", label: "Nome de Usuário: ", name: "user", placeholder: "Digite seu nome de usuário", value: nomeUsuario, onChange: (e) => setNomeUsuario(e.target.value) },
+    { type: "password", id: "senha", label: "Senha: ", name: "senha", placeholder: "Digite sua senha", value: senha, onChange: (e) => setSenha(e.target.value) },
+    { type: "password", id: "confSenha", label: "Confirme sua senha: ", name: "confSenha", placeholder: "Confirme sua senha", value: confSenha, onChange: (e) => setConfSenha(e.target.value) }
 
+    ]
 
-
-    return(
-        <div className="bg-teal-100 h-screen flex justify-center items-center w-full">
-            <div className="bg-white p-12 text-center w-1/2">
-                <FormularioCadastro2 h2= "Quase lá" p="Agora crie um usuário e senha."/>
-            </div>
+    const botaos = [
+        { label: "Voltar", destino: "/cadastro"},
+        { label: "Finalizar", destino: "/cadastro_concluido"}
+      ]
+ return(
+        <div className=" h-screen flex justify-center items-center w-full text-center">
+            <FormularioCadastro h1={"Quase-lá"} p={"Agora cadastre seu usuário"} campos={camposCadastro} botaos={botaos}/>
         </div>
+        
     )
 }
 

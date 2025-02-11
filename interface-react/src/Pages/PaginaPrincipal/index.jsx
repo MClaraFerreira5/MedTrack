@@ -4,7 +4,7 @@ import Header from "../../Componentes/Header";
 
 const PaginaPrincipal = () => {
     return(
-        <div className="tela"><Header/><Main/></div>
+        <div className="tela"><Header h1={'MedTrack'}/><Main/></div>
     
     )
 }

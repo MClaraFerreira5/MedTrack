@@ -5,10 +5,10 @@ import Perfil from "../Perfil";
 import ListaFuncionalidades from "../ListaFuncionalidades";
 
 export default function Sidebar({}) {
-  const [expandida, setExpandida] = useState(false);
+  const [expandida, setExpandida] = useState(true);
 
   return (
-    <div className="relative" >
+    <div className={`${expandida ? "w-64" : "w-16"} h-screen bg-gray-800 text-white transition-all duration-300`} >
       {/* Botão de abrir/fechar */}
       <button
         onClick={() => setExpandida(!expandida)}
@@ -22,7 +22,7 @@ export default function Sidebar({}) {
         initial={{ x: -300 }}
         animate={{ x: expandida ? 0 : -300 }}
         transition={{ duration: 0.3 }}
-        className="fixed left-0 top-0 h-full w-64 bg-gray-900 text-white p-5 shadow-lg"
+        className=" left-0 top-0 h-full w-64 bg-gray-900 text-white p-5 shadow-lg"
       >
         <Perfil />
         <ListaFuncionalidades />
