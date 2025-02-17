@@ -32,21 +32,20 @@ public class MedicamentoService {
 
 
     public Medicamento criarMedicamento(DadosMedicamento dadosMedicamento) {
-        var dependente = new Dependente();
         Medicamento medicamento;
+
         // Associa o medicamento ao usuário
         Usuario usuario = usuarioRepository.findById(dadosMedicamento.usuarioId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-
-        // Caso tenha sido informado o dependenteId, o usuário é um administrador
+        // Caso tenha sido informado o dependenteId, busca o dependente
+        Dependente dependente = null;
         if (dadosMedicamento.dependenteId() != null) {
             dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
                     .orElseThrow(() -> new IllegalArgumentException("Dependente não encontrado"));
-
         }
 
-        // Criando o medicamento
+        // Criando ou buscando a FrequenciaUso
         FrequenciaUso frequenciaUso;
         if (dadosMedicamento.frequenciaUso().id() != null) {
             frequenciaUso = frequenciaUsoRepository.findById(dadosMedicamento.frequenciaUso().id())
@@ -56,11 +55,12 @@ public class MedicamentoService {
             frequenciaUso = frequenciaUsoRepository.save(frequenciaUso);
         }
 
-
+        // Criando o medicamento e associando as dependências
         medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
         medicamento.setFrequenciaUso(frequenciaUso);
 
         // Salvando e retornando o medicamento
         return medicamentoRepository.save(medicamento);
     }
+
 }
