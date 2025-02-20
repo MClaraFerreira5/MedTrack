@@ -14,9 +14,6 @@ public record DadosMedicamento(
         @NotBlank
         String principioAtivo,
 
-        @PositiveOrZero
-        int quantidadeEstoque,
-
         @Positive
         double dosagem,
 

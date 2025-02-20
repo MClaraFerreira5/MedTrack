@@ -9,17 +9,20 @@ import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.FrequenciaUsoRepository;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
+
+import java.beans.PropertyDescriptor;
+import java.util.Arrays;
 
 @Service
 public class MedicamentoService {
 
     private final MedicamentoRepository medicamentoRepository;
-
     private final UsuarioRepository usuarioRepository;
-
     private final DependenteRepository dependenteRepository;
-
     private final FrequenciaUsoRepository frequenciaUsoRepository;
 
     public MedicamentoService(MedicamentoRepository medicamentoRepository, UsuarioRepository usuarioRepository,
@@ -30,37 +33,37 @@ public class MedicamentoService {
         this.frequenciaUsoRepository = frequenciaUsoRepository;
     }
 
-
     public Medicamento criarMedicamento(DadosMedicamento dadosMedicamento) {
-        Medicamento medicamento;
-
-        // Associa o medicamento ao usuário
         Usuario usuario = usuarioRepository.findById(dadosMedicamento.usuarioId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        // Caso tenha sido informado o dependenteId, busca o dependente
         Dependente dependente = null;
         if (dadosMedicamento.dependenteId() != null) {
             dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
                     .orElseThrow(() -> new IllegalArgumentException("Dependente não encontrado"));
         }
 
-        // Criando ou buscando a FrequenciaUso
-        FrequenciaUso frequenciaUso;
-        if (dadosMedicamento.frequenciaUso().id() != null) {
-            frequenciaUso = frequenciaUsoRepository.findById(dadosMedicamento.frequenciaUso().id())
-                    .orElseThrow(() -> new IllegalArgumentException("Frequência de uso não encontrada"));
-        } else {
-            frequenciaUso = new FrequenciaUso(dadosMedicamento.frequenciaUso());
-            frequenciaUso = frequenciaUsoRepository.save(frequenciaUso);
-        }
+        FrequenciaUso frequenciaUso = dadosMedicamento.frequenciaUso().id() != null
+                ? frequenciaUsoRepository.findById(dadosMedicamento.frequenciaUso().id())
+                .orElseThrow(() -> new IllegalArgumentException("Frequência de uso não encontrada"))
+                : frequenciaUsoRepository.save(new FrequenciaUso(dadosMedicamento.frequenciaUso()));
 
-        // Criando o medicamento e associando as dependências
-        medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
+        Medicamento medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
         medicamento.setFrequenciaUso(frequenciaUso);
 
-        // Salvando e retornando o medicamento
         return medicamentoRepository.save(medicamento);
     }
 
+    public Medicamento atualizarMedicamento(DadosMedicamento dadosMedicamento, Medicamento medicamentoExistente) {
+        BeanUtils.copyProperties(dadosMedicamento, medicamentoExistente, getNullPropertyNames(dadosMedicamento));
+        return medicamentoExistente;
+    }
+
+    private String[] getNullPropertyNames(Object source) {
+        final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+        return Arrays.stream(wrappedSource.getPropertyDescriptors())
+                .map(PropertyDescriptor::getName)
+                .filter(name -> wrappedSource.getPropertyValue(name) == null)
+                .toArray(String[]::new);
+    }
 }

@@ -1,10 +1,7 @@
 package com.medtrack.medtrack.model.medicamento.dto;
 
 import com.medtrack.medtrack.model.medicamento.FrequenciaUsoTipo;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,7 +22,7 @@ public record DadosFrequenciaUso(
 
         LocalTime primeiroHorario,
 
-        @Future
+        @FutureOrPresent
         LocalDate dataInicio,
 
         @Future

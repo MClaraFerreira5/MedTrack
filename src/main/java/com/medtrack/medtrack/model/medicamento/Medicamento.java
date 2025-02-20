@@ -24,9 +24,8 @@ public class Medicamento {
 
     private String nome;
     private String principioAtivo;
-    private int quantidadeEstoque;
     private double dosagem;
-    private String observacoes;
+    private String observacoes = null;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -45,7 +44,6 @@ public class Medicamento {
     public Medicamento(@Valid DadosMedicamento dadosMedicamento, Usuario usuario) {
         nome = dadosMedicamento.nome();
         principioAtivo = dadosMedicamento.principioAtivo();
-        quantidadeEstoque = dadosMedicamento.quantidadeEstoque();
         dosagem = dadosMedicamento.dosagem();
         observacoes = dadosMedicamento.observacoes();
         this.usuario = usuario;
@@ -56,7 +54,6 @@ public class Medicamento {
     public Medicamento(@Valid DadosMedicamento dadosMedicamento, Dependente dependente) {
         nome = dadosMedicamento.nome();
         principioAtivo = dadosMedicamento.principioAtivo();
-        quantidadeEstoque = dadosMedicamento.quantidadeEstoque();
         dosagem = dadosMedicamento.dosagem();
         observacoes = dadosMedicamento.observacoes();
         var dadosFrequenciaUso = dadosMedicamento.frequenciaUso();
