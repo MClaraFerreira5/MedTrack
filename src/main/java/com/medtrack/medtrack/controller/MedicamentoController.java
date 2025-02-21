@@ -2,11 +2,14 @@ package com.medtrack.medtrack.controller;
 
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
+
 import com.medtrack.medtrack.service.medicamento.MedicamentoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -40,9 +43,10 @@ public class MedicamentoController {
                 .buildAndExpand(medicamento.getId())
                 .toUri();
 
-        System.out.println(dadosMedicamento);
 
+        System.out.println(medicamento);
         return ResponseEntity.created(uri).body(medicamento);
+
     }
 
     @GetMapping("/todos")
@@ -60,12 +64,18 @@ public class MedicamentoController {
 
     @PutMapping("/alterar/{id}")
     @Transactional
-    public ResponseEntity<Medicamento> atualizarMedicamento(@RequestBody @Valid DadosMedicamento dadosMedicamento, @PathVariable Long id) {
-        return repositorio.findById(id).map(medicamento -> {
-            Medicamento medicamentoAtualizado = medicamentoService.atualizarMedicamento(dadosMedicamento, medicamento);
-            Medicamento atualizado = repositorio.save(medicamentoAtualizado);
-            return ResponseEntity.ok(atualizado);
-        }).orElseThrow(() -> new EntityNotFoundException("Medicamento não encontrado para atualização"));
+    public ResponseEntity<Medicamento> atualizarMedicamento(@RequestBody @Valid DadosMedicamentoPut dadosMedicamentoPut, @PathVariable Long id) {
+//        return repositorio.findById(id).map(medicamento -> {
+//            Medicamento medicamentoAtualizado = medicamentoService.atualizarMedicamento(dadosMedicamentoPut, medicamento);
+//            Medicamento atualizado = repositorio.save(medicamentoAtualizado);
+        if (!repositorio.existsById(id)) {
+            throw new EntityNotFoundException("Medicamento não encontrado para atualização");
+        }
+        var atualizado = medicamentoService.atualizarMedicamento(dadosMedicamentoPut);
+
+
+
+        return ResponseEntity.ok(atualizado);
     }
 
 

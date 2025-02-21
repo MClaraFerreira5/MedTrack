@@ -4,11 +4,13 @@ import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.FrequenciaUso;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
 import com.medtrack.medtrack.model.usuario.Usuario;
 import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.FrequenciaUsoRepository;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -54,10 +56,10 @@ public class MedicamentoService {
         return medicamentoRepository.save(medicamento);
     }
 
-    public Medicamento atualizarMedicamento(DadosMedicamento dadosMedicamento, Medicamento medicamentoExistente) {
-        BeanUtils.copyProperties(dadosMedicamento, medicamentoExistente, getNullPropertyNames(dadosMedicamento));
-        return medicamentoExistente;
-    }
+//    public Medicamento atualizarMedicamento(DadosMedicamento dadosMedicamento, Medicamento medicamentoExistente) {
+//        BeanUtils.copyProperties(dadosMedicamento, medicamentoExistente, getNullPropertyNames(dadosMedicamento));
+//        return medicamentoExistente;
+//    }
 
     private String[] getNullPropertyNames(Object source) {
         final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
@@ -65,5 +67,11 @@ public class MedicamentoService {
                 .map(PropertyDescriptor::getName)
                 .filter(name -> wrappedSource.getPropertyValue(name) == null)
                 .toArray(String[]::new);
+    }
+
+    public Medicamento atualizarMedicamento( @Valid DadosMedicamentoPut dadosMedicamentoPut) {
+        var medicamento= medicamentoRepository.getMedicamentoById(dadosMedicamentoPut.id());
+        BeanUtils.copyProperties(medicamento, dadosMedicamentoPut, getNullPropertyNames(dadosMedicamentoPut));
+        return medicamento;
     }
 }
