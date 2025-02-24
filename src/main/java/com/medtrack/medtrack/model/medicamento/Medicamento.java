@@ -32,7 +32,7 @@ public class Medicamento {
 
     private String nome;
     private String principioAtivo;
-    private double dosagem;
+    private String dosagem;
     private String observacoes = null;
 
     @ManyToOne

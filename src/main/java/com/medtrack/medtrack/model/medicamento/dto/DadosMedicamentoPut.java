@@ -13,7 +13,7 @@ public record DadosMedicamentoPut(
 
         String principioAtivo,
 
-        double dosagem,
+        String dosagem,
 
         String observacoes,
 

@@ -43,8 +43,6 @@ public class MedicamentoController {
                 .buildAndExpand(medicamento.getId())
                 .toUri();
 
-
-        System.out.println(medicamento);
         return ResponseEntity.created(uri).body(medicamento);
 
     }
@@ -65,9 +63,6 @@ public class MedicamentoController {
     @PutMapping("/alterar/{id}")
     @Transactional
     public ResponseEntity<Medicamento> atualizarMedicamento(@RequestBody @Valid DadosMedicamentoPut dadosMedicamentoPut, @PathVariable Long id) {
-//        return repositorio.findById(id).map(medicamento -> {
-//            Medicamento medicamentoAtualizado = medicamentoService.atualizarMedicamento(dadosMedicamentoPut, medicamento);
-//            Medicamento atualizado = repositorio.save(medicamentoAtualizado);
         if (!repositorio.existsById(id)) {
             throw new EntityNotFoundException("Medicamento não encontrado para atualização");
         }

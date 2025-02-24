@@ -14,8 +14,7 @@ public record DadosMedicamento(
         @NotBlank
         String principioAtivo,
 
-        @Positive
-        double dosagem,
+        String dosagem,
 
         String observacoes,
 
