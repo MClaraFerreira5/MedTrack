@@ -17,6 +17,7 @@ const ListaDependentes = () =>{
         <div className="flex self-center justify-between mt-10 ml-10 mr-10">
             <h1 className="text-2xl font-bold mt-2 ">Lista de Dependentes </h1>
             <Botao label={"Criar novo dependente"} destino={"/cadastro_dependente"}></Botao>
+            
         </div>
             <CardDependente/>
         </div>

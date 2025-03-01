@@ -10,7 +10,7 @@ const PaginaCadastro = ({ h1, p }) => {
   const camposCadastro = [
     { type: "text", id: "nome-completo", label: "Nome: ", name: "nome", placeholder: "Digite seu nome", value: nome, onChange: (e) => setNome(e.target.value) },
     { type: "email", id: "email", label: "E-mail: ", name: "email", placeholder: "Digite seu E-mail", value: email, onChange: (e) => setEmail(e.target.value) },
-    { type: "date", id: "data", label: "Data de Nascimento", name: "data", placeholder: "Digite sua idade", value: data, onChange: (e) => setData(e.target.value) }
+    { type: "date", id: "data", label: "Data de Nascimento: ", name: "data", placeholder: "Digite sua idade", value: data, onChange: (e) => setData(e.target.value) }
 
   ]
 

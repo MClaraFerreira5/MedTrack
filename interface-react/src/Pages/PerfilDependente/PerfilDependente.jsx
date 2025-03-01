@@ -8,9 +8,9 @@ const PerfilDependente = () =>{
     const name = "Jaison"
     return(
         <div >
-        <header className="flex items-center gap-10 md:w-4/5 justify-center mx-auto md:pr-10">
-            <Header h1={`Olá, ${name}`} exibirPesquisa={true}/>
-            <Bell size={40} color="cyan" className="hidden sm:block"></Bell>
+        <header className="flex items-center md:w-4/5 mx-auto md:pr-10">
+            <Header h1={`Olá, ${name}`} exibirPesquisa={true} className="w-9/10"/>
+            <Bell size={40} color="cyan" className="hidden sm:block ml-auto"></Bell>
         </header>
         
         <main className="sm:flex 2xl:flex-col md:w-4/5 gap-5 justify-center mx-auto">

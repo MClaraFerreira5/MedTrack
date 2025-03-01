@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { ClipboardList, Home, Menu, X, Box, Calendar, Clock } from "lucide-react";
 import Perfil from "../Perfil";
 import ListaFuncionalidades from "../ListaFuncionalidades";
 
@@ -14,7 +14,16 @@ export default function Sidebar({}) {
         onClick={() => setExpandida(!expandida)}
         className="p-3 bg-gray-800 text-white rounded-md fixed top-2 left-2 z-50"
       >
-        {expandida ? <X /> : <Menu />}
+        {expandida ? <X /> : <div className="flex sm:flex-col gap-[150px] d-none ">
+                                  <Menu /> 
+                                    <div className="flex flex-col gap-[50px]"> 
+                                    <Home/>
+                                      <ClipboardList/>
+                                        <Box/>
+                                        <Clock/>
+                                          <Calendar/>
+                                          </div>
+                                        </div>}
       </button>
 
       {/* Sidebar animada */}

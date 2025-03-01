@@ -9,8 +9,7 @@ const CardDependente = () => {
     { id: 4, nome: "Carimbo", idade: 500.9, telefone: "(11) 98765-4321"},
     { id: 5, nome: "Beyonce", idade: 90, telefone: "(81)98636-6767" },
     { id: 6, nome: "Jimbo", idade: 90, telefone: "(81)98636-6767" },
-    { id: 7, nome: "James", idade: 90, telefone: "(81)98636-6767" },
-    { id: 8, nome: "Alguém da Silva", idade: 3, telefone:"Fresco demais pra atender"}
+    { id: 7, nome: "James", idade: 90, telefone: "(81)98636-6767" }
 
   ]);
 
@@ -19,7 +18,6 @@ const CardDependente = () => {
   };
 
   const navigate = useNavigate();
-
 
   return (
     <div className="p-6">

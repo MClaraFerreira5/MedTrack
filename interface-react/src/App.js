@@ -9,6 +9,7 @@ import ListaDependentes from "./Pages/Dashboard/ListaDependentes.jsx"
 import './index.css'
 import CadastroDependente from "./Pages/PaginaCadastro/CadastroDependente.jsx";
 import PerfilDependente from "./Pages/PerfilDependente/PerfilDependente.jsx";
+import CadastroMedicamentos from "./Pages/PaginaCadastro/CadastroMedicamentos.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/lista_dependentes" element={<ListaDependentes/>}/>
         <Route path="/cadastro_dependente" element={<CadastroDependente/>} />
         <Route path="/perfil" element={<PerfilDependente/>}/>
+        <Route path="/cadastro_medicamento" element={<CadastroMedicamentos/>}/>
       </Routes>
     
   );

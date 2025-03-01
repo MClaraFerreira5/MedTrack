@@ -19,10 +19,10 @@ const FormularioCadastro = ({ campos, botaos, login, h1, p }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 sm:shadow-lg sm:shadow-cyan-500/50 sm:p-20 w-3/5">
-        <h1 className="text-2xl font-semibold">{h1}</h1>
-        <p className="mt-4">{p}</p>
-
+    <div className="flex flex-col  sm:shadow-lg sm:shadow-cyan-500/50 sm:p-20 sm:w-3/5 w-full m-10">
+        <h1 className="text-2xl font-semibold ">{h1}</h1>
+        <p className="mt-4 ">{p}</p>
+    <div className="flex flex-col my-2 gap-4 justify-between">
       {campos.map((campo) => (
         <CampoTexto
           key={campo.name}
@@ -40,16 +40,15 @@ const FormularioCadastro = ({ campos, botaos, login, h1, p }) => {
           Já possui uma conta? Faça o Login
         </a>
         ):(<div> </div>)}
-
-      <div className="flex justify-between self-end">
+        
+</div>
+      <div className="flex self-end">
         {botaos.map((prop) => (
           <Botao 
             label={prop.label}
             destino={prop.destino}
            />
         ))}
-
-        
 
       </div>
     </div>

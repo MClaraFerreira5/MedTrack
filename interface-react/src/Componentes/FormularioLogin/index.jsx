@@ -1,38 +1,38 @@
 import CampoTexto from "../CampoTexto";
-import Botao from "../Botao";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const FormularioLogin = ({h2}) => {
-  const [usuario, setUsuario] = useState("");
-  const [senha, setSenha] = useState("");
+const FormularioLogin = ({ campos}) => {
+  const [formData, setFormData] = useState(
+    campos.reduce((acc, campo) => ({ ...acc, [campo.name]: "" }), {})
+  );
+  const navigate = useNavigate();
+
+  // Atualiza o estado do input de forma dinâmica
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const irPraProxima = () => {
+    navigate("/cadastro_user", { state: formData });
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <form className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6">{h2}</h2>
-
+    <div className="flex flex-col my-2 p-10 gap-4 justify-between w-[400px]">
+      {campos.map((campo) => 
+      (
         <CampoTexto
-          type="text"
-          label="Nome de Usuário:"
-          placeholder="Digite seu nome de usuário"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-
-        <CampoTexto
-          type="password"
-          label="Senha:"
-          placeholder="Digite sua senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-        />
-
-        <div className="flex justify-center mt-4">
-          <Botao label="Entrar" destino="/dashboard" />
-        </div>
-      </form>
-    </div>
-  );
-};
-
+          key={campo.name}
+          type={campo.type}
+          id={campo.id}
+          label={campo.label}
+          name={campo.name}
+          value={formData[campo.name]}
+          placeholder={campo.placeholder}
+          onChange={handleChange}
+        />))
+        
+      }
+      </div>)
+      }
 export default FormularioLogin;

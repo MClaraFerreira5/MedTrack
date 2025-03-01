@@ -18,7 +18,7 @@ const PaginaCadastro2 = ({h1, p}) => {
       ]
  return(
         <div className=" h-screen flex justify-center items-center w-full text-center">
-            <FormularioCadastro h1={"Quase-lá"} p={"Agora cadastre seu usuário"} campos={camposCadastro} botaos={botaos}/>
+            <FormularioCadastro h1={"Quase-lá"} p={"Agora cadastre seu usuário"} campos={camposCadastro} botaos={botaos} />
         </div>
         
     )

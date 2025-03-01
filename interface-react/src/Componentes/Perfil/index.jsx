@@ -1,5 +1,6 @@
 import perfil from '../../Imagens/perfil.png';
 import Box from '../Box';
+import { CircleUser } from 'lucide-react';
 
 const Perfil = ({vaiTer}) => {
   const camposCadastro = [
@@ -11,7 +12,7 @@ const Perfil = ({vaiTer}) => {
 
   return (
     <div className="flex flex-col items-center w-full p-2">
-      <img src={perfil} alt="Imagem de Perfil" className="w-24" />
+      <CircleUser size={80}></CircleUser>
       <h1 className="mt-2">Usuário</h1>
       <p className="mt-1">user@gmail.com</p>
 

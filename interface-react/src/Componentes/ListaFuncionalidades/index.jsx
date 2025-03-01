@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ClipboardList, Box, Clock, Calendar, BarChart, Home } from "lucide-react";
+import { ClipboardList, Box, Clock, Calendar, Home } from "lucide-react";
 
 const ListaFuncionalidades = () => {
   return (
