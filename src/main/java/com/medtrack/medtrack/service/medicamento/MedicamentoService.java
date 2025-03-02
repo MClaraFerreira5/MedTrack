@@ -1,24 +1,30 @@
 package com.medtrack.medtrack.service.medicamento;
 
+import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.FrequenciaUso;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
 import com.medtrack.medtrack.model.usuario.Usuario;
 import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.FrequenciaUsoRepository;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
+
+import java.beans.PropertyDescriptor;
+import java.util.Arrays;
 
 @Service
 public class MedicamentoService {
 
     private final MedicamentoRepository medicamentoRepository;
-
     private final UsuarioRepository usuarioRepository;
-
     private final DependenteRepository dependenteRepository;
-
     private final FrequenciaUsoRepository frequenciaUsoRepository;
 
     public MedicamentoService(MedicamentoRepository medicamentoRepository, UsuarioRepository usuarioRepository,
@@ -29,36 +35,43 @@ public class MedicamentoService {
         this.frequenciaUsoRepository = frequenciaUsoRepository;
     }
 
-
     public Medicamento criarMedicamento(DadosMedicamento dadosMedicamento) {
-        Medicamento medicamento;
-        // Associa o medicamento ao usuário
         Usuario usuario = usuarioRepository.findById(dadosMedicamento.usuarioId())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-
-        // Caso tenha sido informado o dependenteId, o usuário é um administrador
+        Dependente dependente = null;
         if (dadosMedicamento.dependenteId() != null) {
-            var dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
+            dependente = dependenteRepository.findById(dadosMedicamento.dependenteId())
                     .orElseThrow(() -> new IllegalArgumentException("Dependente não encontrado"));
-
         }
 
-        // Criando o medicamento
-        FrequenciaUso frequenciaUso;
-        if (dadosMedicamento.frequenciaUso().id() != null) {
-            frequenciaUso = frequenciaUsoRepository.findById(dadosMedicamento.frequenciaUso().id())
-                    .orElseThrow(() -> new IllegalArgumentException("Frequência de uso não encontrada"));
-        } else {
-            frequenciaUso = new FrequenciaUso(dadosMedicamento.frequenciaUso());
-            frequenciaUso = frequenciaUsoRepository.save(frequenciaUso);
-        }
+        FrequenciaUso frequenciaUso = dadosMedicamento.frequenciaUso().id() != null
+                ? frequenciaUsoRepository.findById(dadosMedicamento.frequenciaUso().id())
+                .orElseThrow(() -> new IllegalArgumentException("Frequência de uso não encontrada"))
+                : frequenciaUsoRepository.save(new FrequenciaUso(dadosMedicamento.frequenciaUso()));
 
-
-        medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
+        Medicamento medicamento = new Medicamento(dadosMedicamento, usuario, dependente);
         medicamento.setFrequenciaUso(frequenciaUso);
 
-        // Salvando e retornando o medicamento
         return medicamentoRepository.save(medicamento);
+    }
+
+//    public Medicamento atualizarMedicamento(DadosMedicamento dadosMedicamento, Medicamento medicamentoExistente) {
+//        BeanUtils.copyProperties(dadosMedicamento, medicamentoExistente, getNullPropertyNames(dadosMedicamento));
+//        return medicamentoExistente;
+//    }
+
+    private String[] getNullPropertyNames(Object source) {
+        final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+        return Arrays.stream(wrappedSource.getPropertyDescriptors())
+                .map(PropertyDescriptor::getName)
+                .filter(name -> wrappedSource.getPropertyValue(name) == null)
+                .toArray(String[]::new);
+    }
+
+    public Medicamento atualizarMedicamento( @Valid DadosMedicamentoPut dadosMedicamentoPut) {
+        var medicamento= medicamentoRepository.getMedicamentoById(dadosMedicamentoPut.id());
+        BeanUtils.copyProperties(medicamento, dadosMedicamentoPut, getNullPropertyNames(dadosMedicamentoPut));
+        return medicamento;
     }
 }

@@ -2,11 +2,18 @@ package com.medtrack.medtrack.model.medicamento;
 
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
 import com.medtrack.medtrack.model.dependente.Dependente;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
 import com.medtrack.medtrack.model.usuario.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+
+import java.beans.PropertyDescriptor;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "Medicamentos")
@@ -16,6 +23,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @ToString
+
 public class Medicamento {
 
     @Id
@@ -24,9 +32,8 @@ public class Medicamento {
 
     private String nome;
     private String principioAtivo;
-    private int quantidadeEstoque;
-    private double dosagem;
-    private String observacoes;
+    private String dosagem;
+    private String observacoes = null;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -45,7 +52,6 @@ public class Medicamento {
     public Medicamento(@Valid DadosMedicamento dadosMedicamento, Usuario usuario) {
         nome = dadosMedicamento.nome();
         principioAtivo = dadosMedicamento.principioAtivo();
-        quantidadeEstoque = dadosMedicamento.quantidadeEstoque();
         dosagem = dadosMedicamento.dosagem();
         observacoes = dadosMedicamento.observacoes();
         this.usuario = usuario;
@@ -56,7 +62,6 @@ public class Medicamento {
     public Medicamento(@Valid DadosMedicamento dadosMedicamento, Dependente dependente) {
         nome = dadosMedicamento.nome();
         principioAtivo = dadosMedicamento.principioAtivo();
-        quantidadeEstoque = dadosMedicamento.quantidadeEstoque();
         dosagem = dadosMedicamento.dosagem();
         observacoes = dadosMedicamento.observacoes();
         var dadosFrequenciaUso = dadosMedicamento.frequenciaUso();
@@ -66,5 +71,27 @@ public class Medicamento {
 
 
     public Medicamento(DadosMedicamento dadosMedicamento, Usuario usuario, Dependente dependente) {
+        nome = dadosMedicamento.nome();
+        principioAtivo = dadosMedicamento.principioAtivo();
+        dosagem = dadosMedicamento.dosagem();
+        observacoes = dadosMedicamento.observacoes();
+        var dadosFrequenciaUso = dadosMedicamento.frequenciaUso();
+        this.frequenciaUso = new FrequenciaUso(dadosFrequenciaUso);
+        this.dependente = dependente;
+        this.usuario = usuario;
     }
+
+    public Medicamento atualizarInformacoes(DadosMedicamentoPut dadosMedicamentoPut, Medicamento medicamento) {
+        BeanUtils.copyProperties(dadosMedicamentoPut, medicamento, getNullPropertyNames(dadosMedicamentoPut));
+        return medicamento;
+    }
+
+    private String[] getNullPropertyNames(Object source) {
+        final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+        return Arrays.stream(wrappedSource.getPropertyDescriptors())
+                .map(PropertyDescriptor::getName)
+                .filter(name -> wrappedSource.getPropertyValue(name) == null)
+                .toArray(String[]::new);
+    }
+
 }
