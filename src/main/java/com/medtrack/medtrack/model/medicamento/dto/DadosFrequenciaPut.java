@@ -1,23 +1,23 @@
 package com.medtrack.medtrack.model.medicamento.dto;
 
 import com.medtrack.medtrack.model.medicamento.FrequenciaUsoTipo;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public record DadosFrequenciaUso(
-        Long id,
+public record DadosFrequenciaPut(
 
-        @NotNull
         FrequenciaUsoTipo frequenciaUsoTipo,
 
-        @NotEmpty
         List<String> diasSemana,
 
         List<LocalTime> horariosEspecificos,
 
+        @Positive
         Integer intervaloHoras,
 
         LocalTime primeiroHorario,
@@ -29,5 +29,3 @@ public record DadosFrequenciaUso(
         LocalDate dataTermino
 ) {
 }
-
-
