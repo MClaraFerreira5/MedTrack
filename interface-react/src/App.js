@@ -10,6 +10,7 @@ import './index.css'
 import CadastroDependente from "./Pages/PaginaCadastro/CadastroDependente.jsx";
 import PerfilDependente from "./Pages/PerfilDependente/PerfilDependente.jsx";
 import CadastroMedicamentos from "./Pages/PaginaCadastro/CadastroMedicamentos.jsx";
+import RecuperacaoSenha from "./Pages/RecuperacaoSenha/index.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/cadastro_dependente" element={<CadastroDependente/>} />
         <Route path="/perfil" element={<PerfilDependente/>}/>
         <Route path="/cadastro_medicamento" element={<CadastroMedicamentos/>}/>
+        <Route path="/recuperacaosenha" element={<RecuperacaoSenha/>}/>
       </Routes>
     
   );
