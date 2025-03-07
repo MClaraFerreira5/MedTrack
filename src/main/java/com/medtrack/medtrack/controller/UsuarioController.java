@@ -4,8 +4,11 @@ import com.medtrack.medtrack.model.usuario.Usuario;
 import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioCadastro;
 import com.medtrack.medtrack.model.usuario.dto.DetalhamentoUsuario;
 import com.medtrack.medtrack.repository.UsuarioRepository;
+import com.medtrack.medtrack.service.usuario.UsuarioService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +23,34 @@ public class UsuarioController {
 
     private final UsuarioRepository repositorio;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private UsuarioService usuarioService;
 
     public UsuarioController(UsuarioRepository repositorio, PasswordEncoder passwordEncoder) {
         this.repositorio = repositorio;
         this.passwordEncoder = passwordEncoder;
     }
 
+//    @PostMapping("/cadastro")
+//    @Transactional
+//    public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
+//        var usuario = new Usuario(dados);
+//
+//        usuario.setSenhaHashed(passwordEncoder.encode(dados.senha()));
+//
+//        repositorio.save(usuario);
+//
+//        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(usuario.getId())
+//                .toUri();
+//
+//        return ResponseEntity.created(uri).build();
+//    }
+
     @PostMapping("/cadastro")
-    @Transactional
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
-        var usuario = new Usuario(dados);
-
-        usuario.setSenhaHashed(passwordEncoder.encode(dados.senha()));
-
-        repositorio.save(usuario);
+        var usuario = usuarioService.cadastrarUsuario(dados);
 
         var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -58,5 +75,13 @@ public class UsuarioController {
 
     }
 
-
+    @DeleteMapping("/deletar/{id}")
+    @Transactional
+    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
+        if (!repositorio.existsById(id)) {
+            throw new EntityNotFoundException("Usuário não encontrado para exclusão");
+        }
+        repositorio.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

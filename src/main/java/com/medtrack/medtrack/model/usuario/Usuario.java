@@ -33,6 +33,7 @@ public class Usuario {
     private String email;
     private String senhaHashed;
     private LocalDate dataNascimento;
+
     private String nomeUsuario;
     private String numeroTelefone;
 
@@ -52,19 +53,6 @@ public class Usuario {
         nomeUsuario = dados.nomeUsuario();
     }
 
-//    private static String hashSenha(String senha) {
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("SHA-256");
-//            byte[] hashedBytes = md.digest(senha.getBytes());
-//            StringBuilder hexString = new StringBuilder();
-//            for (byte b : hashedBytes) {
-//                hexString.append(Integer.toHexString(0xFF & b));
-//            }
-//            return hexString.toString();
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException("Erro ao hash a senha", e);
-//        }
-//    }
 }
 
 

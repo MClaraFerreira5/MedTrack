@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    boolean existsByNomeUsuario(String nomeUsuario);
+
     Page<Usuario> findAll(Pageable paginacao);
 
     Optional<Usuario> getUsuariosById(Long id);
