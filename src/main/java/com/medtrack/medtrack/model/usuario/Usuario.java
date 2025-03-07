@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -46,24 +47,24 @@ public class Usuario {
         email = dados.email();
         tipoConta = dados.categoria();
         numeroTelefone = dados.numeroTelefone();
-        senhaHashed = hashSenha(dados.senha());
+        senhaHashed = dados.senha();
         dataNascimento = dados.dataNascimento();
         nomeUsuario = dados.nomeUsuario();
     }
 
-    private static String hashSenha(String senha) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedBytes = md.digest(senha.getBytes());
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hashedBytes) {
-                hexString.append(Integer.toHexString(0xFF & b));
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Erro ao hash a senha", e);
-        }
-    }
+//    private static String hashSenha(String senha) {
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//            byte[] hashedBytes = md.digest(senha.getBytes());
+//            StringBuilder hexString = new StringBuilder();
+//            for (byte b : hashedBytes) {
+//                hexString.append(Integer.toHexString(0xFF & b));
+//            }
+//            return hexString.toString();
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException("Erro ao hash a senha", e);
+//        }
+//    }
 }
 
 
