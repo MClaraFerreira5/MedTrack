@@ -23,34 +23,20 @@ public class UsuarioController {
 
     private final UsuarioRepository repositorio;
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private UsuarioService usuarioService;
 
     public UsuarioController(UsuarioRepository repositorio, PasswordEncoder passwordEncoder) {
         this.repositorio = repositorio;
         this.passwordEncoder = passwordEncoder;
     }
 
-//    @PostMapping("/cadastro")
-//    @Transactional
-//    public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
-//        var usuario = new Usuario(dados);
-//
-//        usuario.setSenhaHashed(passwordEncoder.encode(dados.senha()));
-//
-//        repositorio.save(usuario);
-//
-//        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(usuario.getId())
-//                .toUri();
-//
-//        return ResponseEntity.created(uri).build();
-//    }
-
     @PostMapping("/cadastro")
+    @Transactional
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
-        var usuario = usuarioService.cadastrarUsuario(dados);
+        var usuario = new Usuario(dados);
+
+        usuario.setSenhaHashed(passwordEncoder.encode(dados.senha()));
+
+        repositorio.save(usuario);
 
         var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -59,6 +45,18 @@ public class UsuarioController {
 
         return ResponseEntity.created(uri).build();
     }
+
+//    @PostMapping("/cadastro")
+//    public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
+//        var usuario = usuarioService.cadastrarUsuario(dados);
+//
+//        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(usuario.getId())
+//                .toUri();
+//
+//        return ResponseEntity.created(uri).build();
+//    }
 
 
     @GetMapping
