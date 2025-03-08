@@ -5,9 +5,8 @@ import { CircleUser } from 'lucide-react';
 const Perfil = ({vaiTer}) => {
   const camposCadastro = [
     { nome: "Nome Completo" },
-    { nome: "Idade"},
-    { nome: "Celular"},
-    { nome: "Extra"}
+    { nome: "Email"},
+    { nome: "Celular"}
   ]
 
   return (
