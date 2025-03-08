@@ -4,6 +4,7 @@ import { ClipboardList, Box, Bolt, Calendar, Home } from "lucide-react";
 const ListaFuncionalidades = () => {
   return (
     <nav className="sm:p-2 text-white">
+      
       <ul className="w-100 flex sm:flex-col space-y-4 sm:justify-start justify-center sm:gap-10 gap-[60px] md:space-y-0">
         <li className="pt-4">
           <Link to="/home" className=" flex items-center gap-2 hover:bg-gray-700 rounded">
