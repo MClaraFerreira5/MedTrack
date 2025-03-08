@@ -37,4 +37,3 @@ const ListaFuncionalidades = () => {
 };
 
 export default ListaFuncionalidades;
-
