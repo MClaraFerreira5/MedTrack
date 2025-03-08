@@ -19,7 +19,7 @@ const FormularioCadastro = ({ campos, botaos, login, h1, p }) => {
   };
 
   return (
-    <div className="flex flex-col  sm:shadow-lg sm:shadow-cyan-500/50 sm:p-20 sm:w-3/5 w-full m-10">
+    <div className="flex flex-col sm:shadow-lg sm:shadow-cyan-500/50 sm:p-20 sm:w-3/5 w-full m-10">
         <h1 className="text-2xl font-semibold ">{h1}</h1>
         <p className="mt-4 ">{p}</p>
     <div className="flex flex-col my-2 gap-4 justify-between">
