@@ -26,6 +26,7 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3001")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody DadosLogin dados) {
         System.out.println("🔑 Tentativa de login: " + dados.username());
@@ -49,7 +50,6 @@ public class AuthController {
             }
         } catch (Exception e) {
             System.out.println("❌ Erro durante a autenticação: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return ResponseEntity.status(401).body("Falha na autenticação!");
