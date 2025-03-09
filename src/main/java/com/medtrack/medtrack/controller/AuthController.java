@@ -31,7 +31,7 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody DadosLogin dados) {
+    public ResponseEntity<String> login(@RequestBody DadosLogin dados) {
         System.out.println("🔑 Tentativa de login: " + dados.username());
         System.out.println("🔐 Senha fornecida: " + dados.password());
 
@@ -49,17 +49,12 @@ public class AuthController {
             if (authentication.isAuthenticated()) {
                 UsuarioDetails usuarioDetails = new UsuarioDetails(usuario);
                 String jwt = jwtService.generateToken(usuarioDetails);
-
-                Map<String, String> response = new HashMap<>();
-                response.put("token", jwt);
-                return ResponseEntity.ok(response);
+                return ResponseEntity.ok(jwt);
             }
         } catch (Exception e) {
             System.out.println("❌ Erro durante a autenticação: " + e.getMessage());
         }
 
-        Map<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("error", "Falha na autenticação");
-        return ResponseEntity.status(401).body(errorResponse);
+        return ResponseEntity.status(401).body("Falha na autenticação!");
     }
 }
