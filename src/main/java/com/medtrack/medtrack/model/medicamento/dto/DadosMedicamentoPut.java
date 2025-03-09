@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DadosMedicamentoPut(
         @NotNull
-        Long id,
-
-        @NotNull
         Long usuarioId,
 
         String nome,
