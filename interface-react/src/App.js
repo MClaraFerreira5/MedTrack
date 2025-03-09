@@ -11,6 +11,10 @@ import CadastroDependente from "./Pages/PaginaCadastro/CadastroDependente.jsx";
 import PerfilDependente from "./Pages/PerfilDependente/PerfilDependente.jsx";
 import CadastroMedicamentos from "./Pages/PaginaCadastro/CadastroMedicamentos.jsx";
 import RecuperacaoSenha from "./Pages/RecuperacaoSenha/index.jsx";
+import Relatorios from "./Pages/Dashboard/Relatorios.jsx";
+import RelatorioMedicacao from "./Pages/PerfilDependente/HistoricoMedicacao.jsx";
+import PaginaHistoricoDependentes from "./Pages/PerfilDependente/HistoricoMedicacao.jsx";
+
 
 function App() {
   return (
@@ -28,6 +32,8 @@ function App() {
         <Route path="/perfil" element={<PerfilDependente/>}/>
         <Route path="/cadastro_medicamento" element={<CadastroMedicamentos/>}/>
         <Route path="/recuperacaosenha" element={<RecuperacaoSenha/>}/>
+        <Route path="/relatorios" element={<Relatorios/>}/>
+        <Route path="/historico_medicacoes" element={<PaginaHistoricoDependentes/>}/>
       </Routes>
     
   );

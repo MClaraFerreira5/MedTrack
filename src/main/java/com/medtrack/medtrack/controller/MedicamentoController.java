@@ -2,6 +2,7 @@ package com.medtrack.medtrack.controller;
 
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoGet;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/medicamentos")
@@ -47,13 +50,20 @@ public class MedicamentoController {
 
     }
 
-    @GetMapping("/todos")
-    public ResponseEntity<Page<Medicamento>> all(Pageable pageable) {
-        Page<Medicamento> medicamentos = repositorio.findAll(pageable);
-        return ResponseEntity.ok(medicamentos);
+    @GetMapping("/todos/{usuarioId}")
+    public ResponseEntity<List<DadosMedicamentoGet>> getMedicamentosByUsuarioId(@PathVariable Long usuarioId) {
+        // Busca todos os medicamentos relacionados ao usuário
+        List<Medicamento> medicamentos = repositorio.findByUsuarioId(usuarioId);
+
+        // Converte os medicamentos para DTOs de resposta
+        List<DadosMedicamentoGet> medicamentoResponseDTOs = medicamentos.stream()
+                .map(DadosMedicamentoGet::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(medicamentoResponseDTOs);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<Medicamento> detalharMedicamento(@PathVariable Long id) {
         Medicamento medicamento = repositorio.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Medicamento não encontrado"));
@@ -62,15 +72,14 @@ public class MedicamentoController {
 
     @PutMapping("/alterar/{id}")
     @Transactional
-    public ResponseEntity<Medicamento> atualizarMedicamento(@RequestBody @Valid DadosMedicamentoPut dadosMedicamentoPut, @PathVariable Long id) {
+    public ResponseEntity<Void> atualizarMedicamento(@RequestBody @Valid DadosMedicamentoPut dadosMedicamentoPut, @PathVariable Long id) {
         if (!repositorio.existsById(id)) {
             throw new EntityNotFoundException("Medicamento não encontrado para atualização");
         }
-        var atualizado = medicamentoService.atualizarMedicamento(dadosMedicamentoPut);
+        medicamentoService.atualizarMedicamento(dadosMedicamentoPut, id);
 
 
-
-        return ResponseEntity.ok(atualizado);
+        return ResponseEntity.ok().build();  // Resposta 200 OK sem conteúdo
     }
 
 

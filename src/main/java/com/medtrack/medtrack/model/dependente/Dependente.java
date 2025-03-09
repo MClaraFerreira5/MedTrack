@@ -1,5 +1,6 @@
 package com.medtrack.medtrack.model.dependente;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
 import com.medtrack.medtrack.model.usuario.Usuario;
@@ -9,8 +10,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Optional;
 
 @Entity
 @Table(name = "Dependentes")
@@ -34,6 +33,7 @@ public class Dependente {
 
     @ManyToOne
     @JoinColumn(name = "administrador_id", nullable = false)
+    @JsonBackReference
     private Usuario administrador;
 
     public Dependente(@Valid DadosDependente dados, Usuario administrador) {
