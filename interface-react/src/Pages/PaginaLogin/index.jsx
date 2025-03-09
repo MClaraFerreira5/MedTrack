@@ -139,11 +139,11 @@ const PaginaLogin = () => {
                 console.error("Erro do backend:", errorText); // Depuração
 
                 // Exibir mensagem de erro para o usuário
-                setErro(errorText || "Usuário ou senha inválidos.");
+                alert(errorText || "Usuário ou senha inválidos.");
             }
         } catch (error) {
             console.error("Erro ao fazer login:", error);
-            setErro("Erro ao conectar com o servidor. Verifique sua conexão ou tente novamente mais tarde.");
+            alert("Erro ao conectar com o servidor. Verifique sua conexão ou tente novamente mais tarde.");
         }
     };
 

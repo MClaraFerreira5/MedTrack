@@ -38,7 +38,8 @@ public class UsuarioController {
 
         repositorio.save(usuario);
 
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
+
+       var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(usuario.getId())
                 .toUri();
