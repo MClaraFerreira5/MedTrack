@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -29,7 +30,7 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3001")
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody DadosLogin dados) {
         System.out.println("🔑 Tentativa de login: " + dados.username());
