@@ -10,14 +10,10 @@ import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.FrequenciaUsoRepository;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
-import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.beans.PropertyDescriptor;
-import java.util.Arrays;
+
 
 @Service
 public class MedicamentoService {
@@ -61,17 +57,19 @@ public class MedicamentoService {
 //        return medicamentoExistente;
 //    }
 
-    private String[] getNullPropertyNames(Object source) {
-        final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
-        return Arrays.stream(wrappedSource.getPropertyDescriptors())
-                .map(PropertyDescriptor::getName)
-                .filter(name -> wrappedSource.getPropertyValue(name) == null)
-                .toArray(String[]::new);
-    }
+//    private String[] getNullPropertyNames(Object source) {
+//        final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+//        return Arrays.stream(wrappedSource.getPropertyDescriptors())
+//                .map(PropertyDescriptor::getName)
+//                .filter(name -> wrappedSource.getPropertyValue(name) == null)
+//                .toArray(String[]::new);
+//    }
 
-    public Medicamento atualizarMedicamento( @Valid DadosMedicamentoPut dadosMedicamentoPut) {
-        var medicamento= medicamentoRepository.getMedicamentoById(dadosMedicamentoPut.id());
-        BeanUtils.copyProperties(medicamento, dadosMedicamentoPut, getNullPropertyNames(dadosMedicamentoPut));
-        return medicamento;
+    public void atualizarMedicamento(DadosMedicamentoPut dadosMedicamentoPut, Long id) {
+        var medicamentoExistente = medicamentoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Medicamento não encontrado"));
+
+        medicamentoExistente.atualizarInformacoes(dadosMedicamentoPut, medicamentoExistente);
+        medicamentoRepository.save(medicamentoExistente);  // Atualiza no banco
     }
 }
