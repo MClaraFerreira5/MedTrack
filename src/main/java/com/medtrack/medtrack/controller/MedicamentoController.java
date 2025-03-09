@@ -50,7 +50,7 @@ public class MedicamentoController {
 
     }
 
-    @GetMapping("todos/{usuarioId}")
+    @GetMapping("/todos/{usuarioId}")
     public ResponseEntity<List<DadosMedicamentoGet>> getMedicamentosByUsuarioId(@PathVariable Long usuarioId) {
         // Busca todos os medicamentos relacionados ao usuário
         List<Medicamento> medicamentos = repositorio.findByUsuarioId(usuarioId);
@@ -63,7 +63,7 @@ public class MedicamentoController {
         return ResponseEntity.ok(medicamentoResponseDTOs);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<Medicamento> detalharMedicamento(@PathVariable Long id) {
         Medicamento medicamento = repositorio.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Medicamento não encontrado"));

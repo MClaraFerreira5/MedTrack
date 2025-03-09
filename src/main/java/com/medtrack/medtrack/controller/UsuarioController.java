@@ -57,7 +57,7 @@ public class UsuarioController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<DetalhamentoUsuario> detalharUsuarios(@PathVariable Long id) {
         var usuario = repositorio.getReferenceById(id);
         return ResponseEntity.ok(new DetalhamentoUsuario(usuario));
