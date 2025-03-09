@@ -2,7 +2,6 @@ import BoxMedicacao from "../BoxMedicacao";
 import Botao from "../Botao";
 
 
-
 const Medicacoes = ({ termoPesquisa }) => {
     const medicamentos = [
         { nome: "Medicamento 1", quantidade: "2 comprimidos" },
