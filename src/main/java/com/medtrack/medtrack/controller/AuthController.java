@@ -29,7 +29,6 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody DadosLogin dados) {
         System.out.println("🔑 Tentativa de login: " + dados.username());
