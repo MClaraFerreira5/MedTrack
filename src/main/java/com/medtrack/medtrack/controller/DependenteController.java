@@ -2,6 +2,7 @@ package com.medtrack.medtrack.controller;
 
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosDependentePut;
 import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
 import com.medtrack.medtrack.service.usuario.DependenteService;
 import jakarta.transaction.Transactional;
@@ -36,7 +37,7 @@ public class DependenteController {
         return ResponseEntity.created(uri).body(dependente);
     }
 
-    @GetMapping
+    @GetMapping("/buscar/todos")
     public ResponseEntity<List<Dependente>> listarTodos() {
         List<Dependente> dependentes = dependenteService.listarTodos();
         return ResponseEntity.ok(dependentes);
@@ -49,7 +50,7 @@ public class DependenteController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<Dependente> detalharDependente(@PathVariable Long id) {
         return dependenteService.buscarPorId(id)
                 .map(ResponseEntity::ok)
@@ -58,15 +59,15 @@ public class DependenteController {
     }
 
     @Transactional
-    @PutMapping
-    public ResponseEntity atualizar(@RequestBody @Valid DadosUpdateDependente dados) {
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<DadosDependentePut> atualizar(@RequestBody @Valid DadosUpdateDependente dados) {
         var dependente = dependenteService.atualizar(dados);
-
-        return ResponseEntity.ok(dependente);
+        return ResponseEntity.ok(new DadosDependentePut (dependente));
     }
 
+
     @Transactional
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity deletar(@PathVariable Long id) {
         if (!dependenteService.existePorId(id)) {
             return ResponseEntity.notFound().build();

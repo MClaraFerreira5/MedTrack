@@ -1,5 +1,6 @@
 package com.medtrack.medtrack.model.medicamento;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
@@ -37,10 +38,12 @@ public class Medicamento {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "dependente_id")
+    @JsonBackReference
     private Dependente dependente;
 
     @OneToOne
