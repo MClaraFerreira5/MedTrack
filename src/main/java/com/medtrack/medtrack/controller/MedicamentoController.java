@@ -2,6 +2,7 @@ package com.medtrack.medtrack.controller;
 
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
+import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoGet;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
 import com.medtrack.medtrack.repository.MedicamentoRepository;
 import com.medtrack.medtrack.service.medicamento.MedicamentoService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/medicamentos")
@@ -43,7 +46,18 @@ public class MedicamentoController {
 
     }
 
+    @GetMapping("/todos/{usuarioId}")
+    public ResponseEntity<List<DadosMedicamentoGet>> getMedicamentosByUsuarioId(@PathVariable Long usuarioId) {
+        // Busca todos os medicamentos relacionados ao usuário
+        List<Medicamento> medicamentos = repositorio.findByUsuarioId(usuarioId);
 
+        // Converte os medicamentos para DTOs de resposta
+        List<DadosMedicamentoGet> medicamentoResponseDTOs = medicamentos.stream()
+                .map(DadosMedicamentoGet::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(medicamentoResponseDTOs);
+    }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Medicamento> detalharMedicamento(@PathVariable Long id) {
