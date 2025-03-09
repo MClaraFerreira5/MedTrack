@@ -3,13 +3,13 @@ import { Phone, Trash, UserCircleIcon } from "lucide-react"; // Ícones para tel
 import { useNavigate } from "react-router-dom";
 const CardDependente = () => {
   const [dependentes, setDependentes] = useState([
-    { id: 1, nome: "Maria Silva", idade: 10, telefone: "(11) 98765-4321" },
-    { id: 2, nome: "João Souza", idade: 15, telefone: "(21) 98888-1111" },
-    { id: 3, nome: "Ana Santos", idade: 65, telefone: "(31) 99999-2222" },
-    { id: 4, nome: "Carimbo", idade: 500.9, telefone: "(11) 98765-4321"},
-    { id: 5, nome: "Beyonce", idade: 90, telefone: "(81)98636-6767" },
-    { id: 6, nome: "Jimbo", idade: 90, telefone: "(81)98636-6767" },
-    { id: 7, nome: "James", idade: 90, telefone: "(81)98636-6767" }
+    { id: 1, nome: "Maria Silva", idade: 10, telefone: "(11) 98765-4321", emDia: true },
+    { id: 2, nome: "João Souza", idade: 15, telefone: "(21) 98888-1111", emDia: false },
+    { id: 3, nome: "Ana Santos", idade: 65, telefone: "(31) 99999-2222", emDia: true },
+    { id: 4, nome: "Carimbo", idade: 500.9, telefone: "(11) 98765-4321", emDia: true},
+    { id: 5, nome: "Beyonce", idade: 90, telefone: "(81)98636-6767", emDia: true },
+    { id: 6, nome: "Jimbo", idade: 90, telefone: "(81)98636-6767", emDia: true },
+    { id: 7, nome: "James", idade: 90, telefone: "(81)98636-6767", emDia: true }
 
   ]);
 
