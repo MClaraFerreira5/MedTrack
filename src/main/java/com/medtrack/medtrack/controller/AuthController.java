@@ -12,6 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -26,9 +29,9 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3001")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody DadosLogin dados) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody DadosLogin dados) {
         System.out.println("🔑 Tentativa de login: " + dados.username());
         System.out.println("🔐 Senha fornecida: " + dados.password());
 
@@ -46,12 +49,17 @@ public class AuthController {
             if (authentication.isAuthenticated()) {
                 UsuarioDetails usuarioDetails = new UsuarioDetails(usuario);
                 String jwt = jwtService.generateToken(usuarioDetails);
-                return ResponseEntity.ok(jwt);
+
+                Map<String, String> response = new HashMap<>();
+                response.put("token", jwt);
+                return ResponseEntity.ok(response);
             }
         } catch (Exception e) {
             System.out.println("❌ Erro durante a autenticação: " + e.getMessage());
         }
 
-        return ResponseEntity.status(401).body("Falha na autenticação!");
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Falha na autenticação");
+        return ResponseEntity.status(401).body(errorResponse);
     }
 }
