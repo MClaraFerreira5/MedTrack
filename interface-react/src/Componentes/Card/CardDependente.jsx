@@ -22,7 +22,7 @@ const CardDependente = () => {
   return (
     <div className="p-6">
       
-      <div className="flex flex-wrap gap-6 justify-center">
+      <div className="flex flex-wrap max-h-[500px] gap-5 justify-center overflow-y-auto p-2 border border-cyan-200 rounded-lg">
         {dependentes.map((dep) => (
           <div key={dep.id} className="bg-white shadow-lg rounded-xl p-5 border border-gray-200 flex flex-col items-center w-64">
             <h3 className="text-xl font-semibold">{dep.nome}</h3>
