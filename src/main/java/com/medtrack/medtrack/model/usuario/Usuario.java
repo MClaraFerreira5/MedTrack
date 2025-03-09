@@ -1,5 +1,6 @@
 package com.medtrack.medtrack.model.usuario;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioCadastro;
@@ -38,6 +39,7 @@ public class Usuario {
     private String numeroTelefone;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Medicamento> medicamentos = new ArrayList<>();
 
     @OneToMany(mappedBy = "administrador", cascade = CascadeType.ALL, orphanRemoval = true)
