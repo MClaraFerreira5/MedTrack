@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
@@ -31,6 +30,7 @@ public class UsuarioController {
         this.passwordEncoder = passwordEncoder;
         this.usuarioService = usuarioService;
     }
+
 
     @PostMapping("/cadastro")
     @Transactional
