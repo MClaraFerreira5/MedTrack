@@ -3,6 +3,7 @@ package com.medtrack.medtrack.service.usuario;
 import com.medtrack.medtrack.model.usuario.Usuario;
 import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioAtualizacao;
 import com.medtrack.medtrack.model.usuario.dto.DadosUsuarioCadastro;
+import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,16 +15,19 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository repositorio;
+
+    private final DependenteRepository dependenteRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository repositorio, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository repositorio, PasswordEncoder passwordEncoder, DependenteRepository dependenteRepository) {
         this.repositorio = repositorio;
         this.passwordEncoder = passwordEncoder;
+        this.dependenteRepository = dependenteRepository;
     }
 
     @Transactional
     public Usuario cadastrarUsuario(DadosUsuarioCadastro dados) {
-        if (repositorio.existsByNomeUsuario(dados.nomeUsuario())) {
+        if (repositorio.existsByNomeUsuario(dados.nomeUsuario()) || dependenteRepository.existsByNomeUsuario(dados.nomeUsuario())) {
             throw new RuntimeException("Nome de usuário já está em uso!");
         }
 

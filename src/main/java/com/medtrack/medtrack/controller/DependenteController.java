@@ -3,7 +3,6 @@ package com.medtrack.medtrack.controller;
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependentePut;
-import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
 import com.medtrack.medtrack.service.usuario.DependenteService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -60,7 +59,7 @@ public class DependenteController {
 
     @Transactional
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<DadosDependentePut> atualizar(@RequestBody @Valid DadosUpdateDependente dados) {
+    public ResponseEntity<DadosDependentePut> atualizar(@RequestBody @Valid DadosDependentePut dados) {
         var dependente = dependenteService.atualizar(dados);
         return ResponseEntity.ok(new DadosDependentePut (dependente));
     }

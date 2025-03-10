@@ -2,7 +2,7 @@ package com.medtrack.medtrack.model.dependente;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
-import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosDependentePut;
 import com.medtrack.medtrack.model.usuario.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -36,14 +36,22 @@ public class Dependente {
     @JsonBackReference
     private Usuario administrador;
 
-    public Dependente(@Valid DadosDependente dados, Usuario administrador) {
+    private String nomeUsuario;
+
+    private String senhaHashed;
+
+
+
+    public Dependente(@Valid DadosDependente dados, Usuario administrador, String senhaHashed) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
         this.administrador = administrador;
+        this.nomeUsuario = dados.nomeUsuario();
+        this.senhaHashed = senhaHashed;
     }
 
-    public void atualizarInformacoes(DadosUpdateDependente dados) {
+    public void atualizarInformacoes(DadosDependentePut dados) {
         if(dados.nome() != null) {
             nome = dados.nome();
         }
@@ -54,6 +62,13 @@ public class Dependente {
 
         if(dados.telefone() != null) {
             telefone = dados.telefone();
+        }
+
+        if(dados.nomeUsuario() != null){
+            nomeUsuario = dados.nomeUsuario();
+        }
+        if(dados.senhaHashed() != null){
+            senhaHashed = dados.senhaHashed();
         }
     }
 }

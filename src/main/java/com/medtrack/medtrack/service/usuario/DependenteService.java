@@ -3,10 +3,12 @@ package com.medtrack.medtrack.service.usuario;
 import com.medtrack.medtrack.config.exception.AdministradorNaoEncontradoException;
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
-import com.medtrack.medtrack.model.dependente.dto.DadosUpdateDependente;
+import com.medtrack.medtrack.model.dependente.dto.DadosDependentePut;
+
 import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +19,30 @@ public class DependenteService {
 
     private final DependenteRepository dependenteRepository;
     private final UsuarioService usuarioService;
+    private final UsuarioRepository usuarioRepository;
 
-    public DependenteService(DependenteRepository dependenteRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public DependenteService(DependenteRepository dependenteRepository, UsuarioRepository usuarioRepository, UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
         this.dependenteRepository = dependenteRepository;
         this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Dependente cadastrar(DadosDependente dadosDependente) {
+        if (usuarioRepository.existsByNomeUsuario(dadosDependente.nomeUsuario()) || dependenteRepository.existsByNomeUsuario(dadosDependente.nomeUsuario())) {
+            throw new RuntimeException("Nome de usuário já está em uso!");
+        }
+
         var usuario = usuarioService.buscarPorId(dadosDependente.administradorId());
         if(usuario.isPresent()) {
             var administrador = usuario.get();
-            return dependenteRepository.save(new Dependente(dadosDependente, administrador));
+
+            String senhaHashed = passwordEncoder.encode(dadosDependente.senhaHashed());
+
+            // Cria o dependente com a senha criptografada
+            return dependenteRepository.save(new Dependente(dadosDependente, administrador, senhaHashed));
 
         } else {
             throw new AdministradorNaoEncontradoException("Administrador não encontrado com o ID: " + dadosDependente.administradorId());
@@ -46,7 +61,7 @@ public class DependenteService {
         return dependenteRepository.findById(id);
     }
 
-    public Dependente atualizar(DadosUpdateDependente dados) {
+    public Dependente atualizar(DadosDependentePut dados) {
         var dependente = dependenteRepository.getReferenceById(dados.id());
         dependente.atualizarInformacoes(dados);
 

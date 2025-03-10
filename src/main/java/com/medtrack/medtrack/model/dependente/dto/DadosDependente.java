@@ -18,8 +18,13 @@ public record DadosDependente (
     String telefone,
 
     @NotNull
-    Long administradorId
+    Long administradorId,
 
+    @NotBlank
+    String nomeUsuario,
+
+    @NotBlank
+    String senhaHashed
 )
   {
-}
+  }

@@ -35,21 +35,16 @@ public class UsuarioController {
     @PostMapping("/cadastro")
     @Transactional
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
-        var usuario = new Usuario(dados);
+        var usuario = usuarioService.cadastrarUsuario(dados);
 
-        usuario.setSenhaHashed(passwordEncoder.encode(dados.senha()));
-
-        repositorio.save(usuario);
-
-
-       var uri = ServletUriComponentsBuilder.fromCurrentRequest()
+        // Cria a URI para o novo recurso
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(usuario.getId())
                 .toUri();
 
         return ResponseEntity.created(uri).build();
     }
-
 
     @GetMapping
     public ResponseEntity<Page<DetalhamentoUsuario>> listar(Pageable paginacao) {
