@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ClipboardList, Home, Menu, X, Box, Calendar, Clock } from "lucide-react";
+import { ClipboardList, Home, Menu, X, Box, Calendar, Bolt} from "lucide-react";
 import Perfil from "../Perfil";
 import ListaFuncionalidades from "../ListaFuncionalidades";
 
@@ -24,7 +24,7 @@ export default function Sidebar({}) {
                                     <Home/>
                                       <ClipboardList/>
                                         <Box/>
-                                        <Clock/>
+                                        <Bolt/>
                                           <Calendar/>
                                           </div>
                                         </div>}
@@ -42,7 +42,7 @@ export default function Sidebar({}) {
       </motion.div>
       </div>
 
-      <div className="fixed flex space-between bottom-0 left-0 w-full bg-gray-900 text-white flex justify-around items-center p-3 sm:hidden">
+      <div className="fixed flex space-between bottom-0 left-0 w-full bg-gray-900 text-white justify-around items-center p-3 sm:hidden">
           <ListaFuncionalidades/>
       </div>
     </>

@@ -5,13 +5,13 @@ import CardDependente from "../../Componentes/Card/CardDependente.jsx";
 import Botao from "../../Componentes/Botao/index.jsx";
 
 const ListaDependentes = () => {
-    const [modoPesquisa, setModoPesquisa] = useState(false);
+   // const [modoPesquisa, setModoPesquisa] = useState(false);
     const [termoPesquisa, setTermoPesquisa] = useState("");
     
     return (
         <div className="flex flex-col h-screen">
             <div className="flex flex-1">
-                <Sidebar className="w-64" />
+                <Sidebar className="w-64" type={false} />
                 <div className="flex-1 p-4 transition-all duration-300">
                     <Header h1={"MedTrack"} exibirPesquisa={true} setTermoPesquisa={setTermoPesquisa} />
                     <div className="flex self-center justify-between mt-10 ml-10 mr-10">
