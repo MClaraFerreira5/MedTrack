@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS frequencia_uso_dias_semana;

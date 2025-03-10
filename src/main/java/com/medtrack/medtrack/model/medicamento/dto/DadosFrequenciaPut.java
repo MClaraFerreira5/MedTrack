@@ -13,8 +13,6 @@ public record DadosFrequenciaPut(
 
         FrequenciaUsoTipo frequenciaUsoTipo,
 
-        List<String> diasSemana,
-
         List<LocalTime> horariosEspecificos,
 
         @Positive
