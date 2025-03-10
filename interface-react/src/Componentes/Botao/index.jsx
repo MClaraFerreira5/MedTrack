@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const Botao = ({ label, destino, estado, type = "button" }) => {
+const Botao = ({ label, destino, estado, /*type = "button"*/ }) => {
     const navegador = useNavigate();
 
     const handleClick = () => {
@@ -12,8 +12,8 @@ const Botao = ({ label, destino, estado, type = "button" }) => {
     return (
         <div className="flex justify-center">
             <button
-                type={type}
-                onClick={type === "button" ? handleClick : undefined}
+                //type={type}
+                onClick={/*type === "button": undefined ?*/ handleClick }
                 className="bg-turquoise text-white px-6 py-2 rounded-full border-none"
             >
                 {label}

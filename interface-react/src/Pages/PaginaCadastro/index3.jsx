@@ -1,18 +1,18 @@
-import React from 'react';
-import Botao from '../../Componentes/Botao';
-
-const PaginaCadastro3 = ({ h1 }) => {
-    return (
+import CampoTexto from '../../Componentes/CampoTexto'
+import FormularioCadastro from '../../Componentes/FormularioCadastro'
+import Botao from '../../Componentes/Botao'
+const PaginaCadastro3 = ({h1}) => {
+    
+    return(
         <div className="h-screen flex justify-center items-center w-full">
             <div className="flex flex-col gap-10 self-center sm:shadow-lg sm:shadow-cyan-500/50 sm:p-20 w-3/5">
                 <h1 className="text-2xl text-center font-semibold">{h1}</h1>
-                <Botao
+                <Botao 
                     label='Ir para a página principal'
-                    destino='/dashboard'
-                />
+                    destino='/dashboard'></Botao>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default PaginaCadastro3;
+export default PaginaCadastro3

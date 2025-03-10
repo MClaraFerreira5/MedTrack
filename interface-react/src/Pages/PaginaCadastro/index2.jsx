@@ -1,99 +1,103 @@
+// src/pages/PaginaCadastro2.js
+
 import React, { useState } from 'react';
 import FormularioCadastro from '../../Componentes/FormularioCadastro';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { cadastrarUsuario } from '../../Service/cadastrarUsuario';
+import { cadastrarUsuario2 } from '../../Service/fectchCadastro'; // Importando o serviço
 
 const PaginaCadastro2 = ({ h1, p }) => {
-    const location = useLocation();
-    console.log('Dados da primeira tela_2:', location.state);
-    const navigate = useNavigate();
+    const [nomeUsuario, setNomeUsuario] = useState('');
+    const [senha, setSenha] = useState('');
+    const [confSenha, setConfSenha] = useState('');
+    const [tipoConta, setTipoConta] = useState('');
 
-    const [formData, setFormData] = useState({
-        nomeUsuario: '',
-        senha: '',
-        confSenha: '',
-        tipoConta: ''
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    const camposCadastro = [
+        {
+            type: 'text',
+            id: 'nome-usuario',
+            label: 'Nome de Usuário: ',
+            name: 'user',
+            placeholder: 'Digite seu nome de usuário',
+            value: nomeUsuario,
+            onChange: (e) => setNomeUsuario(e.target.value),
+        },
+        {
+            type: 'password',
+            id: 'senha',
+            label: 'Senha: ',
+            name: 'senha',
+            placeholder: 'Digite sua senha',
+            value: senha,
+            onChange: (e) => setSenha(e.target.value),
+        },
+        {
+            type: 'password',
+            id: 'confSenha',
+            label: 'Confirme sua senha: ',
+            name: 'confSenha',
+            placeholder: 'Confirme sua senha',
+            value: confSenha,
+            onChange: (e) => setConfSenha(e.target.value),
+        },
+        {
+            type: 'select',
+            id: 'tipo-conta',
+            label: 'Tipo de Conta:',
+            name: 'tipoConta',
+            value: tipoConta,
+            options: [
+                { value: '', text: 'Selecione...' },
+                { value: 'administrador', text: 'Administrador' },
+                { value: 'pessoal', text: 'Pessoal' },
+            ],
+            onChange: (e) => setTipoConta(e.target.value),
+        },
+    ];
 
     const handleSubmit = async (e) => {
-        console.log('Formulário submetido!');
         e.preventDefault();
 
-        console.log('Dados do formulário:', formData);
-
-        if (!formData.nomeUsuario || !formData.senha || !formData.confSenha || !formData.tipoConta) {
-            alert('Por favor, preencha todos os campos.');
-            return;
-        }
-
-        if (formData.senha !== formData.confSenha) {
+        // Validação de senhas
+        if (senha !== confSenha) {
             alert('As senhas não coincidem!');
             return;
         }
 
-        if (formData.tipoConta === '') {
-            alert('Por favor, selecione um tipo de conta.');
-            return;
-        }
-
-        const dadosCadastro = {
-            ...location.state, // Dados da primeira página
-            nomeUsuario: formData.nomeUsuario,
-            senha: formData.senha,
-            tipoConta: formData.tipoConta
+        const usuarioData = {
+            nomeUsuario: nomeUsuario,
+            senha: senha,
+            tipoConta: tipoConta,
         };
 
-        console.log('Dados enviados para a API:', dadosCadastro);
-
         try {
-            const sucesso = await cadastrarUsuario(dadosCadastro);
+            // Envia os dados via fetch para o backend
+            const data = await cadastrarUsuario2(usuarioData);
+            alert('Cadastro de usuário realizado com sucesso!');
 
-            if (sucesso) {
-                navigate('/cadastro_concluido');
-            } else {
-                alert('Erro ao cadastrar usuário. Tente novamente.');
-            }
-        } catch (error) {
-            console.error('Erro ao cadastrar usuário:', error);
-            alert('Erro ao cadastrar usuário. Verifique sua conexão ou tente novamente mais tarde.');
+            // Redirecionar ou executar alguma outra ação após o sucesso
+            // Aqui você pode redirecionar para outra página se necessário:
+            // window.location.href = '/cadastro_concluido';
+        } catch (err) {
+            alert('Erro ao cadastrar usuário!');
         }
     };
 
-    const camposCadastro = [
-        { type: 'text', id: 'nome-usuario', label: 'Nome de Usuário: ', name: 'nomeUsuario', placeholder: 'Digite seu nome de usuário' },
-        { type: 'password', id: 'senha', label: 'Senha: ', name: 'senha', placeholder: 'Digite sua senha' },
-        { type: 'password', id: 'confSenha', label: 'Confirme sua senha: ', name: 'confSenha', placeholder: 'Confirme sua senha' },
-        {
-            type: 'select', id: 'tipo-conta', label: 'Tipo de Conta:', name: 'categoria', options: [
-
-                { value: '', text: 'Selecione...' },
-                { value: 'ADMINISTRADOR', text: 'Administrador' },
-                { value: 'PESSOAL', text: 'Pessoal' }
-            ]
-        }
-    ];
-
     const botaos = [
         { label: 'Voltar', destino: '/cadastro' },
-        { label: 'Finalizar', type: "submit" }
+        { label: 'Finalizar', destino: '/cadastro_concluido' },
     ];
+
+    // Função de submissão para o botão "Finalizar"
+
 
     return (
         <div className="h-screen flex justify-center items-center w-full text-center">
             <FormularioCadastro
                 h1={'Quase-lá'}
-                p={'precisamos de mais algumas informações'}
+                p={'Agora cadastre seu usuário'}
                 campos={camposCadastro}
                 botaos={botaos}
                 login={true}
-                onSubmit={handleSubmit}
-                formData={formData}
-                handleChange={handleChange}
+                handleSubmit={handleSubmit} // Passando a função handleSubmit
             />
         </div>
     );
