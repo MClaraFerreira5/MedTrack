@@ -8,6 +8,7 @@ import com.medtrack.medtrack.model.usuario.dto.DadosLogin;
 import com.medtrack.medtrack.repository.DependenteRepository;
 import com.medtrack.medtrack.repository.UsuarioRepository;
 import com.medtrack.medtrack.service.jwt.JwtService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +68,7 @@ public class AuthMobileController {
             }
             // Criar um token JWT para o Dependente
             DependenteDetails dependenteDetails = new DependenteDetails(dependente);
-            String jwt = jwtService.generateToken(dependenteDetails);
+            String jwt = jwtService.generateTokenDependente(dependenteDetails);
 
             Map<String, String> response = new HashMap<>();
             response.put("token", jwt);

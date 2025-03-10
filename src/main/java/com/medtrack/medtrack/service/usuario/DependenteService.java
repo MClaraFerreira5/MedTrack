@@ -38,11 +38,13 @@ public class DependenteService {
         var usuario = usuarioService.buscarPorId(dadosDependente.administradorId());
         if(usuario.isPresent()) {
             var administrador = usuario.get();
+            var dependente = new Dependente(dadosDependente, administrador);
 
-            String senhaHashed = passwordEncoder.encode(dadosDependente.senha());
+            // Encripta a senha antes de atribuí-la ao campo senhaHashed
+            String senhaCriptografada = passwordEncoder.encode(dadosDependente.senha());
+            dependente.setSenhaHashed(senhaCriptografada);
 
-            // Cria o dependente com a senha criptografada
-            return dependenteRepository.save(new Dependente(dadosDependente, administrador));
+            return dependenteRepository.save(dependente);
 
         } else {
             throw new AdministradorNaoEncontradoException("Administrador não encontrado com o ID: " + dadosDependente.administradorId());
