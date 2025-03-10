@@ -39,10 +39,10 @@ public class DependenteService {
         if(usuario.isPresent()) {
             var administrador = usuario.get();
 
-            String senhaHashed = passwordEncoder.encode(dadosDependente.senhaHashed());
+            String senhaHashed = passwordEncoder.encode(dadosDependente.senha());
 
             // Cria o dependente com a senha criptografada
-            return dependenteRepository.save(new Dependente(dadosDependente, administrador, senhaHashed));
+            return dependenteRepository.save(new Dependente(dadosDependente, administrador));
 
         } else {
             throw new AdministradorNaoEncontradoException("Administrador não encontrado com o ID: " + dadosDependente.administradorId());

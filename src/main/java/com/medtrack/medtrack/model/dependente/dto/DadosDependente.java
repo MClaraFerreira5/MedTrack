@@ -24,7 +24,7 @@ public record DadosDependente (
     String nomeUsuario,
 
     @NotBlank
-    String senhaHashed
+    String senha
 )
   {
   }
