@@ -3,7 +3,6 @@ package com.medtrack.medtrack.model.medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosFrequenciaUso;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -27,10 +26,6 @@ public class FrequenciaUso {
     @Enumerated(EnumType.STRING)
     private FrequenciaUsoTipo frequenciaUsoTipo;
 
-    @NotEmpty
-    @ElementCollection
-    private List<String> diasSemana;
-
     private boolean usoContinuo;
 
     @ElementCollection
@@ -42,7 +37,6 @@ public class FrequenciaUso {
 
     public FrequenciaUso(@Valid DadosFrequenciaUso dados) {
         this.frequenciaUsoTipo = dados.frequenciaUsoTipo();
-        this.diasSemana = dados.diasSemana();
         this.horariosEspecificos = dados.horariosEspecificos();
         this.intervaloHoras = dados.intervaloHoras();
         this.primeiroHorario = dados.primeiroHorario();
