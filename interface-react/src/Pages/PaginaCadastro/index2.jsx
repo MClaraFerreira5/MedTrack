@@ -53,12 +53,6 @@ const PaginaCadastro2 = ({ h1, p }) => {
         },
     ];
 
-    const botaos = [
-        { label: 'Voltar', destino: '/cadastro' },
-        { label: 'Finalizar', destino: '/cadastro_concluido' },
-    ];
-
-    // Função de submissão para o botão "Finalizar"
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -86,6 +80,14 @@ const PaginaCadastro2 = ({ h1, p }) => {
             alert('Erro ao cadastrar usuário!');
         }
     };
+
+    const botaos = [
+        { label: 'Voltar', destino: '/cadastro' },
+        { label: 'Finalizar', destino: '/cadastro_concluido' },
+    ];
+
+    // Função de submissão para o botão "Finalizar"
+
 
     return (
         <div className="h-screen flex justify-center items-center w-full text-center">
