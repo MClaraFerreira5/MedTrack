@@ -42,7 +42,7 @@ public class MedicamentoController {
                 .buildAndExpand(medicamento.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(medicamento);
+        return ResponseEntity.created(uri).build();
 
     }
 
@@ -73,11 +73,8 @@ public class MedicamentoController {
             throw new EntityNotFoundException("Medicamento não encontrado para atualização");
         }
         medicamentoService.atualizarMedicamento(dadosMedicamentoPut, id);
-
-
-        return ResponseEntity.ok().build();  // Resposta 200 OK sem conteúdo
+        return ResponseEntity.ok().build();
     }
-
 
     @DeleteMapping("/deletar/{id}")
     @Transactional

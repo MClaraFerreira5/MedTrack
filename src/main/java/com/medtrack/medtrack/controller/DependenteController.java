@@ -34,7 +34,7 @@ public class DependenteController {
                 .buildAndExpand(dependente.getId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(dependente);
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/buscar/todos")
@@ -64,7 +64,6 @@ public class DependenteController {
         var dependente = dependenteService.atualizar(dados);
         return ResponseEntity.ok(new DadosDependentePut (dependente));
     }
-
 
     @Transactional
     @DeleteMapping("/deletar/{id}")
