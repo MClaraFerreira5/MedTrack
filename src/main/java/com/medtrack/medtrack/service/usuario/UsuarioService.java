@@ -61,6 +61,9 @@ public class UsuarioService {
         if (dados.dataNascimento() != null) {
             usuario.setDataNascimento(dados.dataNascimento());
         }
+        if (dados.tipoConta() != null) {
+            usuario.setTipoConta(dados.tipoConta());
+        }
 
         return repositorio.save(usuario);
     }
