@@ -6,7 +6,7 @@ const PaginaCadastro = ({ h1, p }) => {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
-    data: ""
+    dataNascimento: ""
   });
 
   const navigate = useNavigate();
@@ -19,16 +19,17 @@ const PaginaCadastro = ({ h1, p }) => {
     { type: "text", id: "nome-completo", label: "Nome: ", name: "nome", placeholder: "Digite seu nome" },
     { type: "email", id: "email", label: "E-mail: ", name: "email", placeholder: "Digite seu E-mail" },
     { type: "text", id: "numeroTelefone", label: "Número de Celular: ", name: "numeroTelefone", placeholder: "Digite seu Celular: " },
-    { type: "date", id: "data", label: "Data de Nascimento: ", name: "dataNascimento", placeholder: "Digite sua idade" }
+    { type: "date", id: "dataNascimento", label: "Data de Nascimento: ", name: "dataNascimento", placeholder: "Digite sua idade" }
   ];
 
   const botaos = [
-    { label: "Next", destino: "/cadastro_user" }
+    { label: "Next", type: "submit" }
   ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate('/cadastro_user', { state: formData });
+    console.log('1° Formulário submetido!');
     console.log("Dados da primeira tela_1:", formData)
   };
 

@@ -5,14 +5,13 @@ import { cadastrarUsuario } from '../../Service/cadastrarUsuario';
 
 const PaginaCadastro2 = ({ h1, p }) => {
     const location = useLocation();
-    console.log('Dados da primeira tela_2:', location.state);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         nomeUsuario: '',
         senha: '',
         confSenha: '',
-        tipoConta: ''
+        categoria: ''
     });
 
     const handleChange = (e) => {
@@ -21,12 +20,12 @@ const PaginaCadastro2 = ({ h1, p }) => {
     };
 
     const handleSubmit = async (e) => {
-        console.log('Formulário submetido!');
+        console.log('2° Formulário submetido!');
         e.preventDefault();
 
         console.log('Dados do formulário:', formData);
 
-        if (!formData.nomeUsuario || !formData.senha || !formData.confSenha || !formData.tipoConta) {
+        if (!formData.nomeUsuario || !formData.senha || !formData.confSenha || !formData.categoria) {
             alert('Por favor, preencha todos os campos.');
             return;
         }
@@ -36,7 +35,7 @@ const PaginaCadastro2 = ({ h1, p }) => {
             return;
         }
 
-        if (formData.tipoConta === '') {
+        if (formData.categoria === '') {
             alert('Por favor, selecione um tipo de conta.');
             return;
         }
@@ -45,7 +44,7 @@ const PaginaCadastro2 = ({ h1, p }) => {
             ...location.state, // Dados da primeira página
             nomeUsuario: formData.nomeUsuario,
             senha: formData.senha,
-            tipoConta: formData.tipoConta
+            categoria: formData.categoria
         };
 
         console.log('Dados enviados para a API:', dadosCadastro);
