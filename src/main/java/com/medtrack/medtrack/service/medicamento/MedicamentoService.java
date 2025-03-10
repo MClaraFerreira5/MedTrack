@@ -52,19 +52,6 @@ public class MedicamentoService {
         return medicamentoRepository.save(medicamento);
     }
 
-//    public Medicamento atualizarMedicamento(DadosMedicamento dadosMedicamento, Medicamento medicamentoExistente) {
-//        BeanUtils.copyProperties(dadosMedicamento, medicamentoExistente, getNullPropertyNames(dadosMedicamento));
-//        return medicamentoExistente;
-//    }
-
-//    private String[] getNullPropertyNames(Object source) {
-//        final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
-//        return Arrays.stream(wrappedSource.getPropertyDescriptors())
-//                .map(PropertyDescriptor::getName)
-//                .filter(name -> wrappedSource.getPropertyValue(name) == null)
-//                .toArray(String[]::new);
-//    }
-
     public void atualizarMedicamento(DadosMedicamentoPut dadosMedicamentoPut, Long id) {
         var medicamentoExistente = medicamentoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Medicamento não encontrado"));

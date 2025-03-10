@@ -42,13 +42,13 @@ public class Dependente {
 
 
 
-    public Dependente(@Valid DadosDependente dados, Usuario administrador, String senhaHashed) {
+    public Dependente(@Valid DadosDependente dados, Usuario administrador) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
         this.administrador = administrador;
         this.nomeUsuario = dados.nomeUsuario();
-        this.senhaHashed = senhaHashed;
+        this.senhaHashed = dados.senha();
     }
 
     public void atualizarInformacoes(DadosDependentePut dados) {
