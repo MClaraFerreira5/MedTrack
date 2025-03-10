@@ -1,4 +1,4 @@
-import {Route, Routes} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import PaginaCadastro from './Pages/PaginaCadastro/index.jsx';
 import PaginaPrincipal from './Pages/PaginaPrincipal/index.jsx';
 import PaginaCadastro2 from './Pages/PaginaCadastro/index2.jsx';
@@ -12,6 +12,7 @@ import PerfilDependente from "./Pages/PerfilDependente/PerfilDependente.jsx";
 import CadastroMedicamentos from "./Pages/PaginaCadastro/CadastroMedicamentos.jsx";
 import RecuperacaoSenha from "./Pages/RecuperacaoSenha/index.jsx";
 import Relatorios from "./Pages/Dashboard/Relatorios.jsx";
+import RelatorioMedicacao from "./Pages/PerfilDependente/HistoricoMedicacao.jsx";
 import PaginaHistoricoDependentes from "./Pages/PerfilDependente/HistoricoMedicacao.jsx";
 import Configuracoes from "./Pages/Dashboard/Configuracoes.jsx";
 
