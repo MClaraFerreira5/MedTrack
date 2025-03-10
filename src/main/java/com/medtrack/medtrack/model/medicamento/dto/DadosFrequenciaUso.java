@@ -13,9 +13,6 @@ public record DadosFrequenciaUso(
         @NotNull
         FrequenciaUsoTipo frequenciaUsoTipo,
 
-        @NotEmpty
-        List<String> diasSemana,
-
         List<LocalTime> horariosEspecificos,
 
         Integer intervaloHoras,
