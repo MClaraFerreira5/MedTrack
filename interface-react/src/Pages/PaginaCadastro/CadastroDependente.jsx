@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FormularioCadastro from '../../Componentes/FormularioCadastro';
+import api from "../../Service/api";
 
 const CadastroDependente = () => {
   const [formData, setFormData] = useState({

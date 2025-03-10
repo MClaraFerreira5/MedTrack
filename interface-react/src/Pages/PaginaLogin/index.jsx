@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import FormularioCadastro from '../../Componentes/FormularioCadastro';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../../Service/auth';
 
 const PaginaLogin = () => {
-    const [formData, setFormData] = useState({ username: "", password: "" }); // Estado para armazenar os dados do formulário
+    const [formData, setFormData] = useState({ username: "", password: "" });
     const [erro, setErro] = useState("");
     const navigate = useNavigate();
 
@@ -12,7 +13,8 @@ const PaginaLogin = () => {
     };
 
     const camposCadastro = [
-        { type: "text",
+        {
+            type: "text",
             id: "nome-usuario",
             label: "Nome de Usuário: ",
             name: "username",
@@ -23,7 +25,8 @@ const PaginaLogin = () => {
                 setFormData({ ...formData, username: e.target.value });
             }
         },
-        { type: "password",
+        {
+            type: "password",
             id: "senha",
             label: "Senha: ",
             name: "password",
@@ -46,33 +49,11 @@ const PaginaLogin = () => {
         console.log("Dados enviados:", formData);
 
         try {
-            const response = await fetch('http://localhost:8081/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            console.log("Resposta da API:", response);
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Json recebido:", data);
-
-                localStorage.setItem('token', data.token);
-
-                navigate('/dashboard');
-            } else {
-                const errorText = await response.json();
-                console.error("Erro do backend:", errorText);
-
-                // Exibir mensagem de erro para o usuário
-                setErro(errorText || "Usuário ou senha inválidos.");
-            }
+            await login(formData.username, formData.password);
+            navigate('/dashboard');
         } catch (error) {
             console.error("Erro ao fazer login:", error);
-            alert("Erro ao conectar com o servidor. Verifique sua conexão ou tente novamente mais tarde.");
+            setErro(error.message || "Erro ao fazer login. Tente novamente.");
         }
     };
 
