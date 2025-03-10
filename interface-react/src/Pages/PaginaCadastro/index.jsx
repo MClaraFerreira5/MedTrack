@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cadastrarUsuario } from '../../Serviços/fectchCadastro';
+import { cadastrarUsuario } from '../../Service/fectchCadastro';
 import FormularioCadastro from '../../Componentes/FormularioCadastro';
 
 const PaginaCadastro = ({ h1, p }) => {

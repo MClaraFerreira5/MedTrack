@@ -73,8 +73,6 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
-
-
     @DeleteMapping("/deletar/{id}")
     @Transactional
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {

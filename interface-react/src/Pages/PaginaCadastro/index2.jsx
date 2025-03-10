@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import FormularioCadastro from '../../Componentes/FormularioCadastro';
-import { cadastrarUsuario2 } from '../../Serviços/fectchCadastro'; // Importando o serviço
+import { cadastrarUsuario2 } from '../../Service/fectchCadastro'; // Importando o serviço
 
 const PaginaCadastro2 = ({ h1, p }) => {
     const [nomeUsuario, setNomeUsuario] = useState('');
