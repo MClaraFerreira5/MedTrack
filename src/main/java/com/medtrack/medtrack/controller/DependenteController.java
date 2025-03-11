@@ -38,6 +38,8 @@ public class DependenteController {
             @RequestBody DadosDependente dadosDependente) {
         String nomeUsuario = jwtService.extractUsername(token.replace("Bearer ", ""));
 
+        System.out.println("Nome Usuário: " + nomeUsuario);
+
         Optional<Long> optionalId = usuarioRepository.getIdByNomeUsuario(nomeUsuario);
 
         if (optionalId.isEmpty()) {
