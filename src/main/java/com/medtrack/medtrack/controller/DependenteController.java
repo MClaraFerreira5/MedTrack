@@ -3,6 +3,8 @@ package com.medtrack.medtrack.controller;
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependente;
 import com.medtrack.medtrack.model.dependente.dto.DadosDependentePut;
+import com.medtrack.medtrack.repository.UsuarioRepository;
+import com.medtrack.medtrack.service.jwt.JwtService;
 import com.medtrack.medtrack.service.usuario.DependenteService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -12,21 +14,40 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/dependentes")
 public class DependenteController {
 
     private final DependenteService dependenteService;
+    private final UsuarioRepository usuarioRepository;
+    private final JwtService jwtService;
 
-    public DependenteController(DependenteService dependenteService) {
+    public DependenteController(DependenteService dependenteService, JwtService jwtService,
+                                UsuarioRepository usuarioRepository) {
         this.dependenteService = dependenteService;
+        this.usuarioRepository = usuarioRepository;
+        this.jwtService = jwtService;
     }
 
     @Transactional
     @PostMapping("/cadastrar")
-    public ResponseEntity<Dependente> cadastrar(@RequestBody DadosDependente dadosDependente) {
-        var dependente = dependenteService.cadastrar(dadosDependente);
+    public ResponseEntity<Dependente> cadastrar(
+            @RequestHeader("Authorization") String token,
+            @RequestBody DadosDependente dadosDependente) {
+        String nomeUsuario = jwtService.extractUsername(token.replace("Bearer ", ""));
+
+        System.out.println("Nome Usuário: " + nomeUsuario);
+
+        Optional<Long> optionalId = usuarioRepository.getIdByNomeUsuario(nomeUsuario);
+
+        if (optionalId.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var id = optionalId.get();
+        var dependente = dependenteService.cadastrar(dadosDependente, id);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

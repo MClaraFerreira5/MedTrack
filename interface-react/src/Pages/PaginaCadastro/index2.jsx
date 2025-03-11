@@ -1,101 +1,98 @@
-// src/pages/PaginaCadastro2.js
-
 import React, { useState } from 'react';
 import FormularioCadastro from '../../Componentes/FormularioCadastro';
-import { cadastrarUsuario2 } from '../../Service/fectchCadastro'; // Importando o serviço
+import { useLocation, useNavigate } from 'react-router-dom';
+import { cadastrarUsuario } from '../../Service/cadastrarUsuario';
 
 const PaginaCadastro2 = ({ h1, p }) => {
-    const [nomeUsuario, setNomeUsuario] = useState('');
-    const [senha, setSenha] = useState('');
-    const [confSenha, setConfSenha] = useState('');
-    const [tipoConta, setTipoConta] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const camposCadastro = [
-        {
-            type: 'text',
-            id: 'nome-usuario',
-            label: 'Nome de Usuário: ',
-            name: 'user',
-            placeholder: 'Digite seu nome de usuário',
-            value: nomeUsuario,
-            onChange: (e) => setNomeUsuario(e.target.value),
-        },
-        {
-            type: 'password',
-            id: 'senha',
-            label: 'Senha: ',
-            name: 'senha',
-            placeholder: 'Digite sua senha',
-            value: senha,
-            onChange: (e) => setSenha(e.target.value),
-        },
-        {
-            type: 'password',
-            id: 'confSenha',
-            label: 'Confirme sua senha: ',
-            name: 'confSenha',
-            placeholder: 'Confirme sua senha',
-            value: confSenha,
-            onChange: (e) => setConfSenha(e.target.value),
-        },
-        {
-            type: 'select',
-            id: 'tipo-conta',
-            label: 'Tipo de Conta:',
-            name: 'tipoConta',
-            value: tipoConta,
-            options: [
-                { value: '', text: 'Selecione...' },
-                { value: 'administrador', text: 'Administrador' },
-                { value: 'pessoal', text: 'Pessoal' },
-            ],
-            onChange: (e) => setTipoConta(e.target.value),
-        },
-    ];
+    const [formData, setFormData] = useState({
+        nomeUsuario: '',
+        senha: '',
+        confSenha: '',
+        categoria: ''
+    });
 
-    const botaos = [
-        { label: 'Voltar', destino: '/cadastro' },
-        { label: 'Finalizar', destino: '/cadastro_concluido' },
-    ];
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-    // Função de submissão para o botão "Finalizar"
     const handleSubmit = async (e) => {
+        console.log('2° Formulário submetido!');
         e.preventDefault();
 
-        // Validação de senhas
-        if (senha !== confSenha) {
+        console.log('Dados do formulário:', formData);
+
+        if (!formData.nomeUsuario || !formData.senha || !formData.confSenha || !formData.categoria) {
+            alert('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        if (formData.senha !== formData.confSenha) {
             alert('As senhas não coincidem!');
             return;
         }
 
-        const usuarioData = {
-            nomeUsuario: nomeUsuario,
-            senha: senha,
-            tipoConta: tipoConta,
+        if (formData.categoria === '') {
+            alert('Por favor, selecione um tipo de conta.');
+            return;
+        }
+
+        const dadosCadastro = {
+            ...location.state, // Dados da primeira página
+            nomeUsuario: formData.nomeUsuario,
+            senha: formData.senha,
+            categoria: formData.categoria
         };
 
-        try {
-            // Envia os dados via fetch para o backend
-            const data = await cadastrarUsuario2(usuarioData);
-            alert('Cadastro de usuário realizado com sucesso!');
+        console.log('Dados enviados para a API:', dadosCadastro);
 
-            // Redirecionar ou executar alguma outra ação após o sucesso
-            // Aqui você pode redirecionar para outra página se necessário:
-            // window.location.href = '/cadastro_concluido';
-        } catch (err) {
-            alert('Erro ao cadastrar usuário!');
+        try {
+            const sucesso = await cadastrarUsuario(dadosCadastro);
+
+            if (sucesso) {
+                navigate('/cadastro_concluido');
+            } else {
+                alert('Erro ao cadastrar usuário. Tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar usuário:', error);
+            alert('Erro ao cadastrar usuário. Verifique sua conexão ou tente novamente mais tarde.');
         }
     };
+
+    const camposCadastro = [
+        { type: 'text', id: 'nome-usuario', label: 'Nome de Usuário: ', name: 'nomeUsuario', placeholder: 'Digite seu nome de usuário' },
+        { type: 'password', id: 'senha', label: 'Senha: ', name: 'senha', placeholder: 'Digite sua senha' },
+        { type: 'password', id: 'confSenha', label: 'Confirme sua senha: ', name: 'confSenha', placeholder: 'Confirme sua senha' },
+        {
+            type: 'select', id: 'tipo-conta', label: 'Tipo de Conta:', name: 'categoria', options: [
+
+                { value: '', text: 'Selecione...' },
+                { value: 'ADMINISTRADOR', text: 'Administrador' },
+                { value: 'PESSOAL', text: 'Pessoal' }
+            ]
+        }
+    ];
+
+    const botaos = [
+        { label: 'Voltar', destino: '/cadastro' },
+        { label: 'Finalizar', type: "submit" }
+    ];
 
     return (
         <div className="h-screen flex justify-center items-center w-full text-center">
             <FormularioCadastro
                 h1={'Quase-lá'}
-                p={'Agora cadastre seu usuário'}
+                p={'precisamos de mais algumas informações'}
                 campos={camposCadastro}
                 botaos={botaos}
                 login={true}
-                handleSubmit={handleSubmit} // Passando a função handleSubmit
+                onSubmit={handleSubmit}
+                formData={formData}
+                handleChange={handleChange}
             />
         </div>
     );

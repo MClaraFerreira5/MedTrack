@@ -2,20 +2,17 @@ import { useState } from "react";
 import { Phone, Trash, UserCircleIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const CardDependente = ({ termoPesquisa }) => {
-    const [dependentes, setDependentes] = useState([
-        { id: 1, nome: "Maria Silva", idade: 10, telefone: "(11) 98765-4321", emDia: true },
-        { id: 2, nome: "João Souza", idade: 15, telefone: "(21) 98888-1111", emDia: false },
-        { id: 3, nome: "Ana Santos", idade: 65, telefone: "(31) 99999-2222", emDia: true },
-        { id: 4, nome: "Carimbo", idade: 500.9, telefone: "(11) 98765-4321", emDia: true },
-        { id: 5, nome: "Beyonce", idade: 90, telefone: "(81)98636-6767", emDia: true },
-        { id: 6, nome: "Jimbo", idade: 90, telefone: "(81)98636-6767", emDia: true },
-        { id: 7, nome: "James", idade: 90, telefone: "(81)98636-6767", emDia: true }
-    ]);
+const CardDependente = ({ termoPesquisa, dependentes, removerDependente }) => {
+    // const [dependentes, setDependentes] = useState([
+    //     { id: 1, nome: "Maria Silva",  telefone: "(11) 98765-4321"},
+    //     { id: 2, nome: "João Souza",  telefone: "(21) 98888-1111" },
+    //     { id: 3, nome: "Ana Santos", telefone: "(31) 99999-2222" },
+    //     { id: 4, nome: "Carimbo",  telefone: "(11) 98765-4321"},
+    //     { id: 5, nome: "Beyonce",  telefone: "(81)98636-6767" },
+    //     { id: 6, nome: "Jimbo", telefone: "(81)98636-6767"},
+    //     { id: 7, nome: "James", telefone: "(81)98636-6767" }
+    // ]);
 
-    const removerDependente = (id) => {
-        setDependentes(dependentes.filter(dep => dep.id !== id));
-    };
 
     const navigate = useNavigate();
 
@@ -29,7 +26,6 @@ const CardDependente = ({ termoPesquisa }) => {
                 {dependentesFiltrados.map((dep) => (
                     <div key={dep.id} className="bg-white shadow-lg rounded-xl p-5 border border-gray-200 flex flex-col items-center w-64">
                         <h3 className="text-xl font-semibold">{dep.nome}</h3>
-                        <p className="text-gray-600">Idade: {dep.idade} anos</p>
                         <div className="flex items-center gap-2 text-gray-700 mt-2">
                             <Phone size={16} className="text-cyan-500" />
                             <span>{dep.telefone}</span>

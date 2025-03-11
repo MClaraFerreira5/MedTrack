@@ -7,7 +7,7 @@ const Dashboard = () =>{
     return(
         <div className="flex h-screen bg-gray-100">
       
-      <Sidebar />
+      <Sidebar type={true} />
       <main className="flex-1 p-5">
         <h1 className="text-2xl font-bold">📊 Dashboard</h1>
 

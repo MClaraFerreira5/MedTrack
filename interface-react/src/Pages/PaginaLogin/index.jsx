@@ -40,7 +40,7 @@ const PaginaLogin = () => {
     ];
 
     const botaos = [
-        { label: "Entrar" }
+        { label: "Entrar", type: "submit" }
     ];
 
     const handleLogin = async (e) => {

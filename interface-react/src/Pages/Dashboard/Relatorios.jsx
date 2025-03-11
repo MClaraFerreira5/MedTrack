@@ -9,7 +9,7 @@ const Relatorios = () => {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex flex-1">
-                <Sidebar className="w-64" />
+                <Sidebar className="w-64" type={true} />
                 <div className="flex-1 p-4 transition-all duration-300">
                     {/* Pass setTermoPesquisa to Header */}
                     <Header h1={"MedTrack"} exibirPesquisa={true} setTermoPesquisa={setTermoPesquisa} />

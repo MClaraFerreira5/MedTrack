@@ -4,7 +4,7 @@ const api  = {
         const response = await fetch(url, {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Contet-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         });
         return response.json()
