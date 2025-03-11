@@ -15,6 +15,6 @@ public record DadosMedicamentoMobile(
 ) {
     public DadosMedicamentoMobile(Medicamento medicamento) {
         this(medicamento.getId(), medicamento.getNome(),
-                medicamento.getPrincipioAtivo(), medicamento.getDosagem(), null);
+                medicamento.getPrincipioAtivo(), medicamento.getDosagem(),null);
     }
 }
