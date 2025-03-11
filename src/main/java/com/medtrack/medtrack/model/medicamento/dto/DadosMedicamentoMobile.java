@@ -13,8 +13,8 @@ public record DadosMedicamentoMobile(
         String dosagem,
         List<LocalTime> horarios
 ) {
-    public DadosMedicamentoMobile(Medicamento medicamento) {
+    public DadosMedicamentoMobile(Medicamento medicamento,  List<LocalTime> horarios) {
         this(medicamento.getId(), medicamento.getNome(),
-                medicamento.getPrincipioAtivo(), medicamento.getDosagem(), null);
+                medicamento.getPrincipioAtivo(), medicamento.getDosagem(), horarios);
     }
 }
