@@ -46,18 +46,7 @@ public class MedicamentoController {
 
     }
 
-    @GetMapping("/todos/{usuarioId}")
-    public ResponseEntity<List<DadosMedicamentoGet>> getMedicamentosByUsuarioId(@PathVariable Long usuarioId) {
-        // Busca todos os medicamentos relacionados ao usuário
-        List<Medicamento> medicamentos = repositorio.findByUsuarioId(usuarioId);
 
-        // Converte os medicamentos para DTOs de resposta
-        List<DadosMedicamentoGet> medicamentoResponseDTOs = medicamentos.stream()
-                .map(DadosMedicamentoGet::new)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(medicamentoResponseDTOs);
-    }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Medicamento> detalharMedicamento(@PathVariable Long id) {
