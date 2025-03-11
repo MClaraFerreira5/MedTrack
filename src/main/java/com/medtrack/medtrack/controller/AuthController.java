@@ -32,13 +32,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody DadosLogin dados) {
-        System.out.println("🔑 Tentativa de login: " + dados.username());
-        System.out.println("🔐 Senha fornecida: " + dados.password());
-
         Usuario usuario = usuarioRepository.findByNomeUsuario(dados.username())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-
-        System.out.println("🔐 Senha no banco: " + usuario.getSenhaHashed());
 
         // Autenticando o usuário
         try {

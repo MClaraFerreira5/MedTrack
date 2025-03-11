@@ -42,8 +42,6 @@ const CadastroDependente = () => {
       senha: formData.senha
     };
 
-
-
     setFormData({ nome: "", telefone: "", email: "" , nomeUsuario: "", senha: ""});
 
     try {
@@ -62,9 +60,9 @@ const CadastroDependente = () => {
 
   const camposCadastro = [
     { type: "text", id: "nome-completo", label: "Nome", name: "nome", placeholder: "Digite o nome do dependente" },
-    { type: "number", id: "telefone", label: "Número", name: "telefone", placeholder: "Digite o número do dependente" },
+    { type: "text", id: "telefone", label: "Número", name: "telefone", placeholder: "Digite o número do dependente" },
     { type: "text", id: "email", label: "Email", name: "email", placeholder: "Digite o email do dependente" },
-    { type: "user", id: "nomeUsuario", label: "Nome de Usuário:", name: "nomeUsuario", placeholder: "Digite o nome de Usuário"},
+    { type: "text", id: "nomeUsuario", label: "Nome de Usuário:", name: "nomeUsuario", placeholder: "Digite o nome de Usuário"},
     { type: "password", id: "password", label: "Senha: ", name: "senha", placeholder: "Digite sua senha"}
   ];
 
@@ -76,8 +74,8 @@ const CadastroDependente = () => {
             h1="Novo Dependente"
             campos={camposCadastro}
             botaos={botaos}
-            formData={formData} // Agora passa o objeto completo
-            handleChange={handleChange} // Passa a função que atualiza o estado
+            formData={formData}
+            handleChange={handleChange}
             onSubmit={handleSubmit}
 
         />

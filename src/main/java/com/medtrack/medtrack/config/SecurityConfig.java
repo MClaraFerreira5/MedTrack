@@ -34,7 +34,6 @@ public class SecurityConfig {
             JwtService jwtService,
             UsuarioDetailsService usuarioDetailsService
     ) throws Exception {
-        // Cria o filtro JWT manualmente
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtService, usuarioDetailsService);
 
         http
