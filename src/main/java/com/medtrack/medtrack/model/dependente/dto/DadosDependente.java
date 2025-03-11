@@ -17,7 +17,6 @@ public record DadosDependente (
     @NotBlank
     String telefone,
 
-    @NotNull
     Long administradorId,
 
     @NotBlank
@@ -27,4 +26,14 @@ public record DadosDependente (
     String senha
 )
   {
+      public DadosDependente withAdministradorId(Long administradorId) {
+          return new DadosDependente(
+                  this.nome,
+                  this.email,
+                  this.telefone,
+                  administradorId,
+                  this.nomeUsuario,
+                  this.senha
+          );
+      }
   }

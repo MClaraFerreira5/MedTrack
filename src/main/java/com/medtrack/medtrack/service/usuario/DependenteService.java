@@ -30,25 +30,23 @@ public class DependenteService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Dependente cadastrar(DadosDependente dadosDependente) {
+    public Dependente cadastrar(DadosDependente dadosDependente, Long id) {
+
         if (usuarioRepository.existsByNomeUsuario(dadosDependente.nomeUsuario()) || dependenteRepository.existsByNomeUsuario(dadosDependente.nomeUsuario())) {
             throw new RuntimeException("Nome de usuário já está em uso!");
         }
 
-        var usuario = usuarioService.buscarPorId(dadosDependente.administradorId());
-        if(usuario.isPresent()) {
-            var administrador = usuario.get();
-            var dependente = new Dependente(dadosDependente, administrador);
+        DadosDependente dadosComAdministradorId = dadosDependente.withAdministradorId(id);
 
-            // Encripta a senha antes de atribuí-la ao campo senhaHashed
-            String senhaCriptografada = passwordEncoder.encode(dadosDependente.senha());
-            dependente.setSenhaHashed(senhaCriptografada);
+        var administrador = usuarioService.buscarPorId(dadosComAdministradorId.administradorId())
+                .orElseThrow(() -> new AdministradorNaoEncontradoException("Administrador não encontrado com o ID: " + id));
 
-            return dependenteRepository.save(dependente);
+        var dependente = new Dependente(dadosComAdministradorId, administrador);
 
-        } else {
-            throw new AdministradorNaoEncontradoException("Administrador não encontrado com o ID: " + dadosDependente.administradorId());
-        }
+        String senhaCriptografada = passwordEncoder.encode(dadosComAdministradorId.senha());
+        dependente.setSenhaHashed(senhaCriptografada);
+
+        return dependenteRepository.save(dependente);
     }
 
     public List<Dependente> listarTodos() {
