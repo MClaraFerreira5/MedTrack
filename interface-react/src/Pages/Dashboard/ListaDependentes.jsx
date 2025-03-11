@@ -3,10 +3,16 @@ import Header from "../../Componentes/Header/index.jsx";
 import Sidebar from "../../Componentes/Sidebar/index.jsx";
 import CardDependente from "../../Componentes/Card/CardDependente.jsx";
 import Botao from "../../Componentes/Botao/index.jsx";
+import {getUserRole} from "../../Componentes/Auth/AuthToken";
 
 const ListaDependentes = () => {
    // const [modoPesquisa, setModoPesquisa] = useState(false);
     const [termoPesquisa, setTermoPesquisa] = useState("");
+    const role = getUserRole()
+    let type = true
+    if (role === "PESSOAL") {
+        type = false;
+    }
 
     const [dependentes, setDependentes] = useState([
         { id: 1, nome: "Maria Silva", idade: 10, telefone: "(11) 98765-4321", emDia: true },
@@ -23,7 +29,7 @@ const ListaDependentes = () => {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex flex-1">
-                <Sidebar className="w-64" type={true} />
+                <Sidebar className="w-64" type={type} />
                 <div className="flex-1 p-4 transition-all duration-300">
                     <Header h1={"MedTrack"} exibirPesquisa={true} setTermoPesquisa={setTermoPesquisa} />
                     <div className="flex self-center justify-between mt-10 ml-10 mr-10">

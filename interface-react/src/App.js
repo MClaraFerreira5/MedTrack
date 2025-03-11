@@ -17,34 +17,43 @@ import PaginaHistoricoDependentes from "./Pages/PerfilDependente/HistoricoMedica
 import Configuracoes from "./Pages/Dashboard/Configuracoes.jsx";
 
 function App() {
-      return (
-          <Routes>
-                {/* Rotas Públicas */}
-                <Route path='/' element={<PaginaPrincipal />} />
-                <Route path="/login" element={<PaginaLogin />} />
-                <Route path="/cadastro" element={<PaginaCadastro h1='Bem-Vindo ao MedTrack' p='Cadastre-se e comece a gerenciar suas medicações.' />} />
-                <Route path='/cadastro_user' element={<PaginaCadastro2 h1={"Quase-lá"} p={"Agora cadastre seu usuário."} />} />
-                <Route path='/cadastro_concluido' element={<PaginaCadastro3 h1="Usuário Cadastrado com sucesso!" />} />
-                <Route path="/recuperacaosenha" element={<RecuperacaoSenha />} />
+    return (
+        <Routes>
+            {/* Rotas Públicas */}
+            <Route path='/' element={<PaginaPrincipal />} />
+            <Route path="/login" element={<PaginaLogin />} />
+            <Route path="/cadastro" element={<PaginaCadastro h1='Bem-Vindo ao MedTrack' p='Cadastre-se e comece a gerenciar suas medicações.' />} />
+            <Route path='/cadastro_user' element={<PaginaCadastro2 h1={"Quase-lá"} p={"Agora cadastre seu usuário."} />} />
+            <Route path='/cadastro_concluido' element={<PaginaCadastro3 h1="Usuário Cadastrado com sucesso!" />} />
+            <Route path="/recuperacaosenha" element={<RecuperacaoSenha />} />
 
-                {/* Rotas privadas */}
-                <Route element={<PrivateRoute />}>
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/configuracoes" element={<Configuracoes />} />
-                </Route>
+            {/* Rotas privadas */}
+            <Route element={<PrivateRoute />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/configuracoes" element={<Configuracoes />} />
+            </Route>
 
-                {/* Rotas privadas com role ADMINISTRADOR */}
-                <Route element={<PrivateRoute requiredRole="ADMINISTRADOR" />}>
-                      <Route path="/perfil" element={<PerfilDependente />} />
-                      <Route path="/lista_dependentes" element={<ListaDependentes />} />
-                      <Route path="/cadastro_dependente" element={<CadastroDependente />} />
-                      <Route path="/cadastro_medicamento" element={<CadastroMedicamentos />} />
-                      <Route path="/relatorios" element={<Relatorios />} />
-                      <Route path="/historico_medicacoes" element={<PaginaHistoricoDependentes />} />
-                </Route>
-          </Routes>
-      );
+            {/* Rotas privadas com role ADMINISTRADOR */}
+            <Route element={<PrivateRoute requiredRole="ADMINISTRADOR" />}>
+                <Route path="/home" element={<Dashboard />} />
+                <Route path="/perfil" element={<PerfilDependente />} />
+                <Route path="/lista_dependentes" element={<ListaDependentes />} />
+                <Route path="/cadastro_dependente" element={<CadastroDependente />} />
+                <Route path="/cadastro_medicamento" element={<CadastroMedicamentos />} />
+                <Route path="/relatorios" element={<Relatorios />} />
+                <Route path="/historico_medicacoes" element={<PaginaHistoricoDependentes />} />
+            </Route>
+
+            <Route element={<PrivateRoute requiredRole="PESSOAL" />}>
+                <Route path="/home" element={<Dashboard />} />
+                <Route path="/relatorio" element={<PerfilDependente />} />
+                <Route path="/cadastro_dependente" element={<CadastroDependente />} />
+                <Route path="/cadastro_medicamento" element={<CadastroMedicamentos />} />
+                <Route path="/relatorios" element={<Relatorios />} />
+                <Route path="/historico_medicacoes" element={<PaginaHistoricoDependentes />} />
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;
-
