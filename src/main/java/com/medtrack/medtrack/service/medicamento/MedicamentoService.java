@@ -2,6 +2,7 @@ package com.medtrack.medtrack.service.medicamento;
 
 import com.medtrack.medtrack.model.dependente.Dependente;
 import com.medtrack.medtrack.model.medicamento.FrequenciaUso;
+import com.medtrack.medtrack.model.medicamento.FrequenciaUsoTipo;
 import com.medtrack.medtrack.model.medicamento.Medicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamento;
 import com.medtrack.medtrack.model.medicamento.dto.DadosMedicamentoPut;
@@ -13,6 +14,11 @@ import com.medtrack.medtrack.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -58,5 +64,37 @@ public class MedicamentoService {
 
         medicamentoExistente.atualizarInformacoes(dadosMedicamentoPut, medicamentoExistente);
         medicamentoRepository.save(medicamentoExistente);  // Atualiza no banco
+    }
+
+    public List<LocalTime> calcularHorarios(Medicamento medicamento) {
+        List<LocalTime> horariosNotificacao = new ArrayList<>();
+        FrequenciaUso frequenciaUso = medicamento.getFrequenciaUso();
+
+        if (frequenciaUso.isUsoContinuo()) {
+            return frequenciaUso.getHorariosEspecificos();
+        }
+
+        if (frequenciaUso.getFrequenciaUsoTipo() == FrequenciaUsoTipo.INTERVALO_ENTRE_DOSES) {
+            LocalTime primeiroHorario = frequenciaUso.getPrimeiroHorario();
+            int intervaloHoras = frequenciaUso.getIntervaloHoras();
+            LocalDate dataInicio = frequenciaUso.getDataInicio();
+            LocalDate dataTermino = frequenciaUso.getDataTermino();
+
+            long totalDias = ChronoUnit.DAYS.between(dataInicio, dataTermino);
+
+
+            for (long i = 0; i <= totalDias; i++) {
+                LocalTime horario = primeiroHorario.plusHours((intervaloHoras * i));
+                horariosNotificacao.add(horario);
+            }
+            return horariosNotificacao;
+        }
+
+        // Caso de uso com horários específicos
+        if (frequenciaUso.getFrequenciaUsoTipo() == FrequenciaUsoTipo.HORARIOS_ESPECIFICOS) {
+            return frequenciaUso.getHorariosEspecificos();
+        }
+
+        return new ArrayList<>();
     }
 }
