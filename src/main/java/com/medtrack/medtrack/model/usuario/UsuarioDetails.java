@@ -15,7 +15,7 @@ public class UsuarioDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> usuario.getTipoConta().name()); // Retorna o perfil como autoridade
+        return List.of(() -> usuario.getTipoConta().name());
     }
 
     @Override

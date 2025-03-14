@@ -63,7 +63,7 @@ public class MedicamentoService {
                 .orElseThrow(() -> new EntityNotFoundException("Medicamento não encontrado"));
 
         medicamentoExistente.atualizarInformacoes(dadosMedicamentoPut, medicamentoExistente);
-        medicamentoRepository.save(medicamentoExistente);  // Atualiza no banco
+        medicamentoRepository.save(medicamentoExistente);
     }
 
     public List<LocalTime> calcularHorarios(Medicamento medicamento) {
@@ -90,7 +90,6 @@ public class MedicamentoService {
             return horariosNotificacao;
         }
 
-        // Caso de uso com horários específicos
         if (frequenciaUso.getFrequenciaUsoTipo() == FrequenciaUsoTipo.HORARIOS_ESPECIFICOS) {
             return frequenciaUso.getHorariosEspecificos();
         }

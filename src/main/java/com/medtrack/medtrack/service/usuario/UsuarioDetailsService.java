@@ -50,7 +50,7 @@ public class UsuarioDetailsService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(
                     usuario.getNomeUsuario(),
                     usuario.getSenhaHashed(),
-                    List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getTipoConta().name())) // ADMINISTRADOR ou PESSOAL
+                    List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getTipoConta().name()))
             );
         }
 
@@ -60,7 +60,7 @@ public class UsuarioDetailsService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(
                     dependente.getNomeUsuario(),
                     dependente.getSenhaHashed(),
-                    List.of(new SimpleGrantedAuthority("ROLE_DEPENDENTE")) // Definindo uma role fixa
+                    List.of(new SimpleGrantedAuthority("ROLE_DEPENDENTE"))
             );
         }
 
@@ -75,14 +75,4 @@ public class UsuarioDetailsService implements UserDetailsService {
                 authorities
         );
     }
-
-
-//    private UserDetails criarUserDetails(Usuario usuario) {
-//        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + usuario.getTipoConta().name()));
-//        return new org.springframework.security.core.userdetails.User(
-//                usuario.getNomeUsuario(),
-//                usuario.getSenhaHashed(),
-//                authorities
-//        );
-//    }
 }

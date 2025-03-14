@@ -15,33 +15,28 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    // Gera uma chave segura para o algoritmo HS256
     private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateToken(UsuarioDetails usuario) {
-        // Criação das claims (informações) do token
         Claims claims = Jwts.claims().setSubject(usuario.getUsername());
-        claims.put("categoria", usuario.getTipoConta()); // Adicionando a categoria ao token
+        claims.put("categoria", usuario.getTipoConta());
 
-        // Gerando o token com a assinatura e claims
         return Jwts.builder()
-                .setClaims(claims)  // Usando as claims definidas acima
-                .setIssuedAt(new Date(System.currentTimeMillis())) // Data de criação
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas de validade
-                .signWith(SECRET_KEY, SignatureAlgorithm.HS256) // Algoritmo de assinatura
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String generateTokenDependente(DependenteDetails dependenteDetails) {
-        // Criação das claims (informações) do token
         Claims claims = Jwts.claims().setSubject(dependenteDetails.getUsername());
 
-        // Gerando o token com a assinatura e claims
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis())) // Data de criação
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas de validade
-                .signWith(SECRET_KEY, SignatureAlgorithm.HS256) // Algoritmo de assinatura
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -60,10 +55,10 @@ public class JwtService {
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY) // Define a chave secreta
+                .setSigningKey(SECRET_KEY)
                 .build()
-                .parseClaimsJws(token) // Parseia o token
-                .getBody(); // Obtém o corpo dos claims
+                .parseClaimsJws(token)
+                .getBody();
 
         return claimsResolver.apply(claims);
     }
