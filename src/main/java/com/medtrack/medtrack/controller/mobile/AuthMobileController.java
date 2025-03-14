@@ -43,17 +43,14 @@ public class AuthMobileController {
         System.out.println("🔑 Tentativa de login: " + dados.username());
         System.out.println("🔐 Senha fornecida: " + dados.password());
 
-        // Verificando se o nome de usuário existe em Usuários ou Dependentes
         Optional<Usuario> usuarioOpt = usuarioRepository.findByNomeUsuario(dados.username());
         Optional<Dependente> dependenteOpt = dependenteRepository.findByNomeUsuario(dados.username());
 
         if (usuarioOpt.isPresent()) {
-            // Se for um Usuário
             Usuario usuario = usuarioOpt.get();
             if (!passwordEncoder.matches(dados.password(), usuario.getSenhaHashed())) {
                 return ResponseEntity.status(401).body(Collections.singletonMap("error", "Senha inválida"));
             }
-            // Criar um token JWT para o Usuário
             UsuarioDetails usuarioDetails = new UsuarioDetails(usuario);
             String jwt = jwtService.generateToken(usuarioDetails);
 
@@ -61,12 +58,10 @@ public class AuthMobileController {
             response.put("token", jwt);
             return ResponseEntity.ok(response);
         } else if (dependenteOpt.isPresent()) {
-            // Se for um Dependente
             Dependente dependente = dependenteOpt.get();
             if (!passwordEncoder.matches(dados.password(), dependente.getSenhaHashed())) {
                 return ResponseEntity.status(401).body(Collections.singletonMap("error", "Senha inválida"));
             }
-            // Criar um token JWT para o Dependente
             DependenteDetails dependenteDetails = new DependenteDetails(dependente);
             String jwt = jwtService.generateTokenDependente(dependenteDetails);
 
@@ -74,8 +69,6 @@ public class AuthMobileController {
             response.put("token", jwt);
             return ResponseEntity.ok(response);
         }
-
-        // Se o nome de usuário não existir
         return ResponseEntity.status(401).body(Collections.singletonMap("error", "Usuário ou dependente não encontrado"));
     }
 

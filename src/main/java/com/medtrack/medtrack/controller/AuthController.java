@@ -34,8 +34,7 @@ public class AuthController {
     public ResponseEntity<Map<String, String>> login(@RequestBody DadosLogin dados) {
         Usuario usuario = usuarioRepository.findByNomeUsuario(dados.username())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-
-        // Autenticando o usuário
+        
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(dados.username(), dados.password())

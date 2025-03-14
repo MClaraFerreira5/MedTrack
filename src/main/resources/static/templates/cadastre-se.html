@@ -76,9 +76,8 @@
 
         <script>
             document.getElementById('form').addEventListener('submit', function (event) {
-                event.preventDefault();  // Impede o envio padrão do formulário
+                event.preventDefault();
 
-                // Coleta os dados do formulário
                 const nome = document.getElementById('nome-completo').value;
                 const email = document.getElementById('email').value;
                 const nomeUsuario = document.getElementById('nome-de-usuario').value;
@@ -91,8 +90,6 @@
                     return;
                 }
 
-
-                // Cria um objeto com os dados
                 const usuario = {
                     nome: nome,
                     email: email,
@@ -102,7 +99,6 @@
                     dataNascimento: dataNascimento
                 };
 
-                // Envia os dados para o backend
                 fetch("http://localhost:8081/cadastro", {
                     method: "POST",
                     headers: {

@@ -110,12 +110,12 @@
         function repetirHTML() {
             const containerEventos = document.querySelector('.container_eventos');
             const eventoItem = document.getElementById('evento_item');
-            const repeticoes = 10; // Quantas vezes repetir // Quantas vezes repetir
+            const repeticoes = 10;
 
-            for (let i = 1; i < repeticoes; i++) { // Começa em 1 porque o primeiro já existe
-                const clone = eventoItem.cloneNode(true); // Clona o elemento com todo seu conteúdo
-                clone.id = `evento_item_${i}`; // Define um novo ID para evitar conflitos
-                containerEventos.appendChild(clone); // Adiciona o clone ao container
+            for (let i = 1; i < repeticoes; i++) {
+                const clone = eventoItem.cloneNode(true);
+                clone.id = `evento_item_${i}`;
+                containerEventos.appendChild(clone);
                 }
         }
 

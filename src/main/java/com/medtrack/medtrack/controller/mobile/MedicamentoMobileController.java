@@ -56,15 +56,13 @@ public class MedicamentoMobileController {
         if (ADMINISTRADOR.equals(usuario.getTipoConta()) || PESSOAL.equals(usuario.getTipoConta())) {
             medicamentos = medicamentoRepository.findByUsuarioId(usuario.getId());
         } else {
-            medicamentos = medicamentoRepository.findByDependenteId(usuario.getId());// Buscar medicamentos para usuários
+            medicamentos = medicamentoRepository.findByDependenteId(usuario.getId());
         }
 
         List<DadosMedicamentoMobile> medicamentosMobile = medicamentos.stream()
                 .map(medicamento -> {
-                    // Calcula os horários conforme a lógica definida
                     List<LocalTime> horarios = medicamentoService.calcularHorarios(medicamento);
 
-                    // Converte para o DTO, agora com a lista de horários
                     return new DadosMedicamentoMobile(medicamento, horarios);
                 })
                 .collect(Collectors.toList());

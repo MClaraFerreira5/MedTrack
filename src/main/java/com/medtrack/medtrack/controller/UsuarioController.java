@@ -37,7 +37,6 @@ public class UsuarioController {
     public ResponseEntity<Void> cadastrarUsuario(@RequestBody @Valid DadosUsuarioCadastro dados) {
         var usuario = usuarioService.cadastrarUsuario(dados);
 
-        // Cria a URI para o novo recurso
         var uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(usuario.getId())

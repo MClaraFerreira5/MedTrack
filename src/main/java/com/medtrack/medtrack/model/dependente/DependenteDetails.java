@@ -15,7 +15,7 @@ public class DependenteDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList(); // Dependente não tem permissões específicas
+        return Collections.emptyList();
     }
 
     @Override
