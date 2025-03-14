@@ -55,7 +55,6 @@ const PaginaCadastro2 = ({ h1, p }) => {
             if (sucesso) {
                 navigate('/cadastro_concluido');
             } else {
-                alert('Erro ao cadastrar usuário. Tente novamente.');
             }
         } catch (error) {
             console.error('Erro ao cadastrar usuário:', error);
