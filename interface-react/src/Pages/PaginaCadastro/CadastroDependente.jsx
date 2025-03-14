@@ -47,6 +47,7 @@ const CadastroDependente = () => {
     try {
       const sucesso = await api.post("http://localhost:8081/dependentes/cadastrar", dadosCadastro);
       console.log("Dependente cadastrado com sucesso!");
+      console.log(sucesso)
       if (sucesso) {
         navigate('/lista_dependentes');
       } else {

@@ -46,11 +46,6 @@ function App() {
 
             <Route element={<PrivateRoute requiredRole="PESSOAL" />}>
                 <Route path="/home" element={<Dashboard />} />
-                <Route path="/relatorio" element={<PerfilDependente />} />
-                <Route path="/cadastro_dependente" element={<CadastroDependente />} />
-                <Route path="/cadastro_medicamento" element={<CadastroMedicamentos />} />
-                <Route path="/relatorios" element={<Relatorios />} />
-                <Route path="/historico_medicacoes" element={<PaginaHistoricoDependentes />} />
             </Route>
         </Routes>
     );
