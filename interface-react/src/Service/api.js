@@ -23,6 +23,7 @@ const api  = {
         if (response.status !== 201) {
             throw new Error('Erro ao fazer a requisição');
         }
+         return true
     },
 
     put: async (url, data) => {
@@ -45,7 +46,11 @@ const api  = {
                 'Content-Type': 'application/json'
             }
         });
-        return response.json();
+
+        if (response.status !== 204) {
+            throw new Error('Erro ao fazer a requisição');
+        }
+        return true
     }
 };
 

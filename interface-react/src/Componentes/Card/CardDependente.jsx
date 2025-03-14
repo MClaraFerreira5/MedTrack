@@ -1,24 +1,18 @@
 import { useState } from "react";
 import { Phone, Trash, UserCircleIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import api from "../../Service/api";
 
 const CardDependente = ({ termoPesquisa, dependentes, removerDependente }) => {
-    // const [dependentes, setDependentes] = useState([
-    //     { id: 1, nome: "Maria Silva",  telefone: "(11) 98765-4321"},
-    //     { id: 2, nome: "João Souza",  telefone: "(21) 98888-1111" },
-    //     { id: 3, nome: "Ana Santos", telefone: "(31) 99999-2222" },
-    //     { id: 4, nome: "Carimbo",  telefone: "(11) 98765-4321"},
-    //     { id: 5, nome: "Beyonce",  telefone: "(81)98636-6767" },
-    //     { id: 6, nome: "Jimbo", telefone: "(81)98636-6767"},
-    //     { id: 7, nome: "James", telefone: "(81)98636-6767" }
-    // ]);
-
-
     const navigate = useNavigate();
 
     const dependentesFiltrados = dependentes.filter(dep =>
         dep.nome.toLowerCase().includes(termoPesquisa.toLowerCase())
     );
+
+    function remover() {
+        api.delete()
+    }
 
     return (
         <div className="p-6">

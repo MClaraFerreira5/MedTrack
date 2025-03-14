@@ -47,17 +47,16 @@ const CadastroDependente = () => {
     try {
       const sucesso = await api.post("http://localhost:8081/dependentes/cadastrar", dadosCadastro);
       console.log("Dependente cadastrado com sucesso!");
+      console.log(sucesso)
       if (sucesso) {
         navigate('/lista_dependentes');
       } else {
-        alert('Erro ao cadastrar usuário. Tente novamente.');
       }
     } catch (error) {
       console.error('Erro ao cadastrar usuário:', error);
       alert('Erro ao cadastrar usuário. Verifique sua conexão ou tente novamente mais tarde.');
     }
   };
-
   const camposCadastro = [
     { type: "text", id: "nome-completo", label: "Nome", name: "nome", placeholder: "Digite o nome do dependente" },
     { type: "text", id: "telefone", label: "Número", name: "telefone", placeholder: "Digite o número do dependente" },

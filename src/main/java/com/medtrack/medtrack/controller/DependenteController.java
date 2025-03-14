@@ -58,8 +58,19 @@ public class DependenteController {
     }
 
     @GetMapping("/buscar/todos")
-    public ResponseEntity<List<Dependente>> listarTodos() {
-        List<Dependente> dependentes = dependenteService.listarTodos();
+    public ResponseEntity<List<Dependente>> listarTodos(@RequestHeader("Authorization") String token) {
+        String nomeAdministrador = jwtService.extractUsername(token.replace("Bearer ", ""));
+
+        Optional<Long> optionalId = usuarioRepository.getIdByNomeUsuario(nomeAdministrador);
+
+        if (optionalId.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var id = optionalId.get();
+
+        List<Dependente> dependentes = dependenteService.listarPorAdministradorId(id);
+
         return ResponseEntity.ok(dependentes);
     }
 
