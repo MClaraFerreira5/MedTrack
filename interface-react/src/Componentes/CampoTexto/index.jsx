@@ -7,7 +7,7 @@ const CampoTexto = ({ type,id, label, placeholder, value, onChange, name }) => {
           name={name}
           id={id}
           type={type}
-          value={value.trim()}
+          value={value}
           onChange={onChange}
           className="w-full h-10 px-3 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
         />

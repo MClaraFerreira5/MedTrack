@@ -9,7 +9,7 @@ public record DadosMedicamentoMobile(
 
         Long id,
         String nome,
-        String principioAtivo,
+        String compostoAtivo,
         String dosagem,
         List<LocalTime> horarios
 ) {
