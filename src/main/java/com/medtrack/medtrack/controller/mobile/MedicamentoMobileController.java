@@ -60,8 +60,10 @@ public class MedicamentoMobileController {
         List<DadosMedicamentoMobile> medicamentosMobile = medicamentos.stream()
                 .map(medicamento -> {
                     List<LocalTime> horarios = medicamentoService.calcularHorarios(medicamento);
-                    return new DadosMedicamentoMobile(medicamento, horarios);
+                    boolean usoContinuo = medicamento.getFrequenciaUso().isUsoContinuo();
+                    return new DadosMedicamentoMobile(medicamento, horarios, usoContinuo);
                 })
+                .filter(medimentoMobile -> !medimentoMobile.horarios().isEmpty())
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(medicamentosMobile);

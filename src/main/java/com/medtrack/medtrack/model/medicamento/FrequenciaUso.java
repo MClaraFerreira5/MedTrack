@@ -36,12 +36,13 @@ public class FrequenciaUso {
     private LocalDate dataTermino = null;
 
     public FrequenciaUso(@Valid DadosFrequenciaUso dados) {
-        this.frequenciaUsoTipo = dados.frequenciaUsoTipo();
-        this.horariosEspecificos = dados.horariosEspecificos();
-        this.intervaloHoras = dados.intervaloHoras();
-        this.primeiroHorario = dados.primeiroHorario();
-        this.dataInicio = dados.dataInicio();
-        this.dataTermino = dados.dataTermino();
+        frequenciaUsoTipo = dados.frequenciaUsoTipo();
+        usoContinuo = dados.usoContinuo();
+        horariosEspecificos = dados.horariosEspecificos();
+        intervaloHoras = dados.intervaloHoras();
+        primeiroHorario = dados.primeiroHorario();
+        dataInicio = dados.dataInicio();
+        dataTermino = dados.dataTermino();
     }
 
 }
