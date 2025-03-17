@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -74,26 +76,39 @@ public class MedicamentoService {
             return frequenciaUso.getHorariosEspecificos();
         }
 
+        LocalDate dataInicio = frequenciaUso.getDataInicio();
+        LocalDate dataTermino = frequenciaUso.getDataTermino();
+
+        if (dataTermino.isBefore(LocalDate.now())) {
+            return new ArrayList<>();
+        }
+
+        if (dataInicio.isBefore(LocalDate.now())) {
+            dataInicio = LocalDate.now();
+        }
+
         if (frequenciaUso.getFrequenciaUsoTipo() == FrequenciaUsoTipo.INTERVALO_ENTRE_DOSES) {
             LocalTime primeiroHorario = frequenciaUso.getPrimeiroHorario();
             int intervaloHoras = frequenciaUso.getIntervaloHoras();
-            LocalDate dataInicio = frequenciaUso.getDataInicio();
-            LocalDate dataTermino = frequenciaUso.getDataTermino();
 
-            long totalDias = ChronoUnit.DAYS.between(dataInicio, dataTermino);
+            int horariosPorDia = 24 / intervaloHoras;
 
-
-            for (long i = 0; i <= totalDias; i++) {
-                LocalTime horario = primeiroHorario.plusHours((intervaloHoras * i));
-                horariosNotificacao.add(horario);
+            LocalDate dataAtual = dataInicio;
+            while (!dataAtual.isAfter(dataTermino)) {
+                for (int i = 0; i < horariosPorDia; i++) {
+                    LocalTime horarioAtual = primeiroHorario.plusHours(i * intervaloHoras);
+                    horariosNotificacao.add(horarioAtual);
+                }
+                dataAtual = dataAtual.plusDays(1);
             }
-            return horariosNotificacao;
+        } else if (frequenciaUso.getFrequenciaUsoTipo() == FrequenciaUsoTipo.HORARIOS_ESPECIFICOS) {
+            LocalDate dataAtual = dataInicio;
+            while (!dataAtual.isAfter(dataTermino)) {
+                horariosNotificacao.addAll(frequenciaUso.getHorariosEspecificos());
+                dataAtual = dataAtual.plusDays(1);
+            }
         }
 
-        if (frequenciaUso.getFrequenciaUsoTipo() == FrequenciaUsoTipo.HORARIOS_ESPECIFICOS) {
-            return frequenciaUso.getHorariosEspecificos();
-        }
-
-        return new ArrayList<>();
+        return horariosNotificacao;
     }
 }

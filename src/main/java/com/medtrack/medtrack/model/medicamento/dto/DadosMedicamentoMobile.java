@@ -9,12 +9,13 @@ public record DadosMedicamentoMobile(
 
         Long id,
         String nome,
-        String principioAtivo,
+        String compostoAtivo,
         String dosagem,
-        List<LocalTime> horarios
+        List<LocalTime> horarios,
+        boolean usoContinuo
 ) {
-    public DadosMedicamentoMobile(Medicamento medicamento,  List<LocalTime> horarios) {
+    public DadosMedicamentoMobile(Medicamento medicamento, List<LocalTime> horarios, boolean usoContinuo) {
         this(medicamento.getId(), medicamento.getNome(),
-                medicamento.getPrincipioAtivo(), medicamento.getDosagem(), horarios);
+                medicamento.getPrincipioAtivo(), medicamento.getDosagem(), horarios, usoContinuo);
     }
 }

@@ -32,7 +32,7 @@ public class UsuarioMobileController {
         Optional<Usuario> optional = usuarioRepository.findByNomeUsuario(username);
 
         if (optional.isEmpty()) {
-            return (ResponseEntity<DadosUsuarioMobile>) ResponseEntity.notFound();
+            return ResponseEntity.notFound().build();
         }
 
         Usuario usuario = optional.get();

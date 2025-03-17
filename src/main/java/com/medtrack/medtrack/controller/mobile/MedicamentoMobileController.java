@@ -42,16 +42,14 @@ public class MedicamentoMobileController {
     @GetMapping("/lista")
     public ResponseEntity<List<DadosMedicamentoMobile>> getMedicamentos(@RequestHeader("Authorization") String token) {
         String username = jwtService.extractUsername(token.replace("Bearer ", ""));
-        System.out.println("Token extraído: " + token.replace("Bearer ", ""));
-
         Optional<Usuario> optional = usuarioRepository.findByNomeUsuario(username);
 
         if (optional.isEmpty()) {
             return ResponseEntity.notFound().build();
-
         }
 
         Usuario usuario = optional.get();
+
         List<Medicamento> medicamentos;
         if (ADMINISTRADOR.equals(usuario.getTipoConta()) || PESSOAL.equals(usuario.getTipoConta())) {
             medicamentos = medicamentoRepository.findByUsuarioId(usuario.getId());
@@ -62,9 +60,10 @@ public class MedicamentoMobileController {
         List<DadosMedicamentoMobile> medicamentosMobile = medicamentos.stream()
                 .map(medicamento -> {
                     List<LocalTime> horarios = medicamentoService.calcularHorarios(medicamento);
-
-                    return new DadosMedicamentoMobile(medicamento, horarios);
+                    boolean usoContinuo = medicamento.getFrequenciaUso().isUsoContinuo();
+                    return new DadosMedicamentoMobile(medicamento, horarios, usoContinuo);
                 })
+                .filter(medimentoMobile -> !medimentoMobile.horarios().isEmpty())
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(medicamentosMobile);

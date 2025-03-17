@@ -13,6 +13,8 @@ public record DadosFrequenciaUso(
         @NotNull
         FrequenciaUsoTipo frequenciaUsoTipo,
 
+        boolean usoContinuo,
+
         List<LocalTime> horariosEspecificos,
 
         Integer intervaloHoras,
