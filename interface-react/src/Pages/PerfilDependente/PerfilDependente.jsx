@@ -15,7 +15,7 @@ const PerfilDependente = () => {
                 <Bell size={40} color="cyan" className="hidden sm:block ml-auto" />
             </header>
 
-            <main className="sm:flex 2xl:flex-col md:w-4/5 gap-5 justify-center mx-auto">
+            <main className="flex md:w-4/5 gap-5 justify-center mx-auto">
                 <section className="mx-auto h-screen border border-cyan-300 rounded-lg p-10 ml-3 hidden sm:block">
                     <Perfil vaiTer={true} />
                 </section>

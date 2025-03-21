@@ -9,6 +9,13 @@ const CadastroMedicamentos = () => {
     const [quantidade, setQuantidade] = useState("");
     const [quantMili, setQuantMili] = useState("");
     const [quantDia, setQuantDia] = useState("");
+    const [formData, setFormData] = useState({
+        nomeMed: "",
+        agenteAtivo: "",
+        email: "",
+        nomeUsuario:"",
+        senha:""
+    });
 
     const { buscarAgenteAtivo, filtrarMedicamentos } = useMedicamentos();
 
@@ -19,6 +26,7 @@ const CadastroMedicamentos = () => {
         const agente = buscarAgenteAtivo(nome);
         setAgenteAtivo(agente);
     };
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">

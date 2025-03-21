@@ -19,6 +19,8 @@ const isTokenExpired = (token) => {
     }
 };
 
+
+
 export const getUserRole = () => {
     const token = localStorage.getItem("token");
     if (!token) {

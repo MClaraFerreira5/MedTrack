@@ -1,16 +1,19 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Header from "../../Componentes/Header/index.jsx";
 import Sidebar from "../../Componentes/Sidebar/index.jsx";
 import Relatorio from "../../Componentes/Relatorio/index.jsx";
 import {getUserRole} from "../../Componentes/Auth/AuthToken";
+import api from "../../Service/api";
 
 const Relatorios = () => {
     const [termoPesquisa, setTermoPesquisa] = useState(""); // Define the state and setter
+
     const role = getUserRole()
     let type = true
     if (role === "PESSOAL") {
         type = false;
     }
+
 
     return (
         <div className="flex flex-col h-screen">
